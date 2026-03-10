@@ -1,26 +1,27 @@
 *---------------------------------------------------------------------------------------------------
 * Semantic building routines. These functions are called while building the parser
 * patterns, not during pattern matching.
+* Note: two-arg DEFINE used so body labels don't clash with function names (SPITBOL compat)
 *---------------------------------------------------------------------------------------------------
-               DEFINE('shift(p,t)')
-               DEFINE('reduce(t,n)')
+               DEFINE('shift(p,t)',  'shift_')
+               DEFINE('reduce(t,n)', 'reduce_')
                OPSYN('~', 'shift', 2)
                OPSYN('&', 'reduce', 2)
-               DEFINE('pop()')
-               DEFINE('nPush()')
-               DEFINE('nInc()')
-               DEFINE('nDec()')
-               DEFINE('nTop()')
-               DEFINE('nPop()')                                                  :(semanticEnd)
+               DEFINE('pop()',       'pop_')
+               DEFINE('nPush()',     'nPush_')
+               DEFINE('nInc()',      'nInc_')
+               DEFINE('nDec()',      'nDec_')
+               DEFINE('nTop()',      'nTop_')
+               DEFINE('nPop()',      'nPop_')                                    :(semanticEnd)
 *---------------------------------------------------------------------------------------------------
-shift          shift          =  EVAL("p . thx . *Shift('" t "', thx)")          :(RETURN)
-reduce         reduce         =  EVAL("epsilon . *Reduce(" t ", " n ")")         :(RETURN)
-pop            pop            =  epsilon . *Pop(.dummy)                          :(RETURN)
+shift_         shift          =  EVAL("p . thx . *Shift('" t "', thx)")          :(RETURN)
+reduce_        reduce         =  EVAL("epsilon . *Reduce(" t ", " n ")")         :(RETURN)
+pop_           pop            =  epsilon . *Pop(.dummy)                          :(RETURN)
 *---------------------------------------------------------------------------------------------------
-nPush          nPush          =  epsilon . *PushCounter()                        :(RETURN)
-nInc           nInc           =  epsilon . *IncCounter()                         :(RETURN)
-nDec           nDec           =  epsilon . *DecCounter()                         :(RETURN)
-nTop           nTop           =  TopCounter()                                    :(RETURN)
-nPop           nPop           =  epsilon . *PopCounter()                         :(RETURN)
+nPush_         nPush          =  epsilon . *PushCounter()                        :(RETURN)
+nInc_          nInc           =  epsilon . *IncCounter()                         :(RETURN)
+nDec_          nDec           =  epsilon . *DecCounter()                         :(RETURN)
+nTop_          nTop           =  TopCounter()                                    :(RETURN)
+nPop_          nPop           =  epsilon . *PopCounter()                         :(RETURN)
 *---------------------------------------------------------------------------------------------------
 semanticEnd
