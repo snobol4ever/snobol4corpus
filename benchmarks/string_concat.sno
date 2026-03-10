@@ -1,12 +1,12 @@
 * string_concat.sno
 * Bottleneck: string allocation and GC pressure (O(n^2) copies).
-* Append one char 2000 times. Expected SIZE: 2000
+* Append one char 100,000 times.
     &TRIM = 1
-    &STLIMIT = 10000000
+    &STLIMIT = 1000000000
     T1 = TIME()
     S = ''
     N = 0
-LOOP    N = LT(N, 2000) N + 1          :F(DONE)
+LOOP    N = LT(N, 100000) N + 1        :F(DONE)
     S = S 'x'                          :(LOOP)
 DONE    T2 = TIME()
     OUTPUT = "result: " SIZE(S)

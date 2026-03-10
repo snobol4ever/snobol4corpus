@@ -1,8 +1,8 @@
 * op_dispatch.sno
 * Bottleneck: arithmetic operator dispatch overhead.
-* Mix of +, -, *, / and comparison in a loop.
+* Mix of +, -, *, / and comparison, 1,000,000 outer loops.
     &TRIM = 1
-    &STLIMIT = 100000000
+    &STLIMIT = 1000000000
     T1 = TIME()
     N = 1
     OUTER = 0
@@ -10,7 +10,7 @@ OUTER   N = N + 3
     N = N - 1
     N = N * 2
     N = GE(N, 10000000) N / 10000      :S(OUTER)F(NEXT)
-NEXT    OUTER = LT(OUTER, 100) OUTER + 1    :S(OUTER)
+NEXT    OUTER = LT(OUTER, 1000000) OUTER + 1  :S(OUTER)
     T2 = TIME()
     OUTPUT = "result: " N
     OUTPUT = "ms: " (T2 - T1)

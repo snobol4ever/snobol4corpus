@@ -1,11 +1,11 @@
 * string_manip.sno
 * Bottleneck: string function dispatch and string allocation.
-* Runs REPLACE, SIZE on a sentence string 500 times.
+* Runs REPLACE + SIZE on a sentence string 5,000,000 times.
     &TRIM = 1
-    &STLIMIT = 10000000
+    &STLIMIT = 1000000000
     T1 = TIME()
     ITER = 0
-LOOP    ITER = LT(ITER, 500) ITER + 1      :F(DONE)
+LOOP    ITER = LT(ITER, 5000000) ITER + 1   :F(DONE)
     S = 'The quick brown fox jumps over the lazy dog'
     S = REPLACE(S, 'aeiou', '*****')
     N = SIZE(S)

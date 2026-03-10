@@ -1,8 +1,8 @@
 * mixed_workload.sno
-* Bottleneck: combined pattern parsing, TABLE ops, recursion (200 iters).
-* Parses a CSV of integers into a TABLE, sums them, cross-checks with RSUM.
+* Bottleneck: combined pattern parsing, TABLE ops, recursion.
+* 50,000 iterations.
     &TRIM = 1
-    &STLIMIT = 100000000
+    &STLIMIT = 1000000000
     DEFINE('RSUM(N)')                   :(RSUM_END)
 RSUM    RSUM = EQ(N,0) 0               :S(RETURN)
     RSUM = N + RSUM(N - 1)             :(RETURN)
@@ -21,7 +21,7 @@ COMPUTE TOTAL = 0
 ADD     I = LT(I, IDX) I + 1          :F(CHECK)
     TOTAL = TOTAL + T<I>               :(ADD)
 CHECK   CHECK = RSUM(10)
-    OUTER = LT(OUTER, 200) OUTER + 1   :S(OUTER)
+    OUTER = LT(OUTER, 50000) OUTER + 1  :S(OUTER)
     T2 = TIME()
     OUTPUT = "result: " TOTAL
     OUTPUT = "ms: " (T2 - T1)

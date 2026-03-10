@@ -1,15 +1,15 @@
 * func_call.sno
 * Bottleneck: function call/return overhead, local var save/restore.
-* Trivial INC function called 2,000,000 times. Expected: 2000000
+* Trivial INC function called 10,000,000 times.
     &TRIM = 1
-    &STLIMIT = 100000000
+    &STLIMIT = 1000000000
     DEFINE('INC(N)')                    :(INC_END)
 INC     INC = N + 1                    :(RETURN)
 INC_END
     T1 = TIME()
     R = 0
     N = 0
-LOOP    N = LT(N, 2000000) N + 1       :F(DONE)
+LOOP    N = LT(N, 10000000) N + 1      :F(DONE)
     R = INC(R)                         :(LOOP)
 DONE    T2 = TIME()
     OUTPUT = "result: " R

@@ -1,10 +1,8 @@
 * roman.sno
 * Bottleneck: recursive functions, heavy identifier/function dispatch.
-* ROMAN('1776') recurses 4 levels, exercising DEFINE, RPOS, LEN, BREAK,
-* REPLACE, label-table gotos.
-* Expected: MDCCLXXVI IX CD MMXXVI
+* ROMAN('1776') called 100,000 times.
     &TRIM = 1
-    &STLIMIT = 100000000
+    &STLIMIT = 1000000000
     DEFINE('ROMAN(N)T')                 :(ROMAN_END)
 ROMAN   N   RPOS(1)  LEN(1) . T  =         :F(RETURN)
     '0,1I,2II,3III,4IV,5V,6VI,7VII,8VIII,9IX,'
@@ -13,14 +11,10 @@ ROMAN   N   RPOS(1)  LEN(1) . T  =         :F(RETURN)
 +                                       :S(RETURN)F(FRETURN)
 ROMAN_END
     T1 = TIME()
-    R1 = ROMAN('1776')
-    R2 = ROMAN('9')
-    R3 = ROMAN('400')
-    R4 = ROMAN('2026')
+    N = 0
+LOOP    R = ROMAN('1776')
+    N = LT(N, 100000) N + 1            :S(LOOP)
     T2 = TIME()
-    OUTPUT = R1
-    OUTPUT = R2
-    OUTPUT = R3
-    OUTPUT = R4
+    OUTPUT = "result: " R
     OUTPUT = "ms: " (T2 - T1)
 END

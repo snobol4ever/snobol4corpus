@@ -1,15 +1,15 @@
 * pattern_bt.sno
 * Bottleneck: pattern backtracking with alternation.
-* Alternation of 4 choices + SPAN in an unanchored search, 500 iters.
+* Alternation of 4 choices + SPAN, 500,000 iterations.
     &TRIM = 1
-    &STLIMIT = 100000000
+    &STLIMIT = 1000000000
     &ANCHOR = 0
     PAT = ('aaa' | 'bbb' | 'ccc' | 'ddd') SPAN('abcd') . W
     S = 'xxxxxxxxxxbbbccccddddaaaaxxxxxxxxxxbbbccccddddaaaa'
     T1 = TIME()
     N = 0
 LOOP    S PAT                           :F(DONE)
-    N = LT(N, 500) N + 1               :S(LOOP)
+    N = LT(N, 500000) N + 1            :S(LOOP)
 DONE    T2 = TIME()
     OUTPUT = "result: " N
     OUTPUT = "ms: " (T2 - T1)

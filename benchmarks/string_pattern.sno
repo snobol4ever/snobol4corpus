@@ -1,12 +1,12 @@
 * string_pattern.sno
 * Bottleneck: pattern matching, BREAK, repeated subject scanning.
-* Realistic CSV parsing via BREAK pattern (200 iters).
+* CSV parsing via BREAK pattern, 500,000 outer iterations.
     &TRIM = 1
-    &STLIMIT = 10000000
+    &STLIMIT = 1000000000
     PAT = BREAK(',') . WORD ','
     T1 = TIME()
     ITER = 0
-OUTER   ITER = LT(ITER, 200) ITER + 1      :F(DONE)
+OUTER   ITER = LT(ITER, 500000) ITER + 1   :F(DONE)
     S = 'alpha,beta,gamma,delta,epsilon,zeta,eta,theta,iota,kappa,'
     RESULT = ''
 INNER   S PAT = ''                          :F(OUTER)

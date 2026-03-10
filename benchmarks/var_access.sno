@@ -1,8 +1,8 @@
 * var_access.sno
-* Bottleneck: identifier lookup — IdentifierTable[symbol] on every read/write.
-* Reads and writes 5 distinct variables in a tight loop (2000 iters).
+* Bottleneck: identifier lookup on every read/write.
+* 5 variables in a tight loop, 10,000,000 iterations.
     &TRIM = 1
-    &STLIMIT = 10000000
+    &STLIMIT = 1000000000
     T1 = TIME()
     A = 1
     B = 2
@@ -15,7 +15,7 @@ LOOP    A = A + 1
     C = A + B
     D = C + A
     E = D + B
-    N = LT(N, 2000) N + 1              :S(LOOP)
+    N = LT(N, 10000000) N + 1          :S(LOOP)
     T2 = TIME()
     OUTPUT = "result: " E
     OUTPUT = "ms: " (T2 - T1)
