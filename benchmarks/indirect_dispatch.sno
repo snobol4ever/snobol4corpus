@@ -1,0 +1,16 @@
+* indirect_dispatch.sno
+* Bottleneck: $ (indirect) dynamic function dispatch — no compile cost.
+* Contrast with eval_fixed.sno: $ is pure runtime lookup, much cheaper.
+* 500 iterations of $FN(X) where FN = 'ADD1'.
+    &TRIM = 1
+    DEFINE('ADD1(V)')                   :(ADD1END)
+ADD1    ADD1 = V + 1                    :(RETURN)
+ADD1END
+    FN = 'ADD1'
+    X = 5
+    N = 0
+LOOP    N = LT(N, 500) N + 1           :F(DONE)
+    R = $FN(X)
+    :(LOOP)
+DONE    OUTPUT = R
+END

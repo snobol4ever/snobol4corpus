@@ -1,0 +1,11 @@
+* eval_dynamic.sno
+* Bottleneck: EVAL() of a dynamically constructed expression — no reuse possible.
+* 200 iterations, expression changes every iteration.
+    &TRIM = 1
+    N = 0
+LOOP    N = LT(N, 200) N + 1           :F(DONE)
+    EXPR = 'N + ' N
+    R = EVAL(EXPR)
+    :(LOOP)
+DONE    OUTPUT = R
+END

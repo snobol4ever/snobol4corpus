@@ -1,0 +1,10 @@
+* fibonacci.sno
+* Bottleneck: deep recursion, function call/return overhead.
+* FIB(18) = 2584, requires ~10,945 recursive SNOBOL4 function calls.
+* Expected: 2584
+    DEFINE('FIB(N)')                        :(FIB_END)
+FIB     FIB = LT(N,2) N                    :S(RETURN)
+    FIB = FIB(N - 1) + FIB(N - 2)     :(RETURN)
+FIB_END
+    OUTPUT = FIB(18)
+END

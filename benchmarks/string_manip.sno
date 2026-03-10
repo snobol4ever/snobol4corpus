@@ -1,0 +1,12 @@
+* string_manip.sno
+* Bottleneck: string function dispatch and string allocation.
+* Runs REPLACE, SIZE, SUBSTR on a sentence string 500 times.
+    &TRIM = 1
+    ITER = 0
+LOOP    ITER = LT(ITER, 500) ITER + 1      :F(DONE)
+    S = 'The quick brown fox jumps over the lazy dog'
+    S = REPLACE(S, 'aeiou', '*****')
+    N = SIZE(S)
+    S2 = SUBSTR(S, 1, 10) SUBSTR(S, 11, 10)    :(LOOP)
+DONE    OUTPUT = N
+END

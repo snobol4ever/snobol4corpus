@@ -1,0 +1,10 @@
+* arith_loop.sno
+* Bottleneck: pure interpreter dispatch, tight counter loop.
+* Increments N from 0 to 1000 with no I/O or pattern matching.
+* Expected: 1000
+    &TRIM = 1
+    N = 0
+LOOP    N = N + 1
+    N = LT(N, 1000) N          :S(LOOP)
+    OUTPUT = N
+END

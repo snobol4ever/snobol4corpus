@@ -1,0 +1,11 @@
+* eval_fixed.sno
+* Bottleneck: EVAL() of a fixed expression — full compile each call.
+* 200 iterations of EVAL('X + 1').
+    &TRIM = 1
+    X = 10
+    N = 0
+LOOP    N = LT(N, 200) N + 1           :F(DONE)
+    R = EVAL('X + 1')
+    :(LOOP)
+DONE    OUTPUT = R
+END

@@ -1,0 +1,21 @@
+* roman.sno
+* Bottleneck: recursive functions, heavy identifier/function dispatch.
+* ROMAN('1776') recurses 4 levels, exercising DEFINE, RPOS, LEN, BREAK,
+* REPLACE, label-table gotos.
+* Expected: R1=MDCCLXXVI R2=IX R3=CD R4=MMXXVI
+    DEFINE('ROMAN(N)T')                 :(ROMAN_END)
+ROMAN   N   RPOS(1)  LEN(1) . T  =         :F(RETURN)
+    '0,1I,2II,3III,4IV,5V,6VI,7VII,8VIII,9IX,'
++   T   BREAK(',') . T                  :F(FRETURN)
+    ROMAN = REPLACE(ROMAN(N), 'IVXLCDM', 'XLCDM**') T
++                                       :S(RETURN)F(FRETURN)
+ROMAN_END
+    R1 = ROMAN('1776')
+    R2 = ROMAN('9')
+    R3 = ROMAN('400')
+    R4 = ROMAN('2026')
+    OUTPUT = R1
+    OUTPUT = R2
+    OUTPUT = R3
+    OUTPUT = R4
+END

@@ -1,0 +1,13 @@
+* string_pattern.sno
+* Bottleneck: pattern matching, BREAK, repeated subject scanning.
+* Realistic CSV parsing via BREAK pattern (200 iters).
+    &TRIM = 1
+    PAT = BREAK(',') . WORD ','
+    ITER = 0
+OUTER   ITER = LT(ITER, 200) ITER + 1      :F(DONE)
+    S = 'alpha,beta,gamma,delta,epsilon,zeta,eta,theta,iota,kappa,'
+    RESULT = ''
+INNER   S PAT = ''                          :F(OUTER)
+    RESULT = RESULT WORD               :(INNER)
+DONE    OUTPUT = RESULT
+END
