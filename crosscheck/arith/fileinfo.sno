@@ -1,8 +1,8 @@
-*        fileinfo.spt - Produce information about a file
-*        This program counts the number of characters and lines in a file.
+*     fileinfo.sno - Count characters and lines read from stdin.
+*     Tests: SIZE(), integer accumulation, unanchored loop, END branch on EOF.
 
          &TRIM    =  1
 NEXTL    CHARS    =  CHARS + SIZE(INPUT)                    :F(DONE)
          LINES    =  LINES + 1                              :(NEXTL)
-DONE     OUTPUT   =  CHARS ' characters, ' +LINES ' lines read'
+DONE     OUTPUT   =  CHARS ' characters, ' LINES ' lines read'
 END

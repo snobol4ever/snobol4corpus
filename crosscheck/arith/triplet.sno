@@ -1,5 +1,5 @@
-*        triplet.spt - Simple text formatting
-*        Reformats a file by centering the lines and arranging them in groups of three.
+*     triplet.sno - Center input lines and add blank line every third.
+*     Tests: DUPL(), REMDR(), integer arithmetic, SIZE(), &TRIM.
 
          &TRIM    =  1
          N        =  0

@@ -1,31 +1,26 @@
-* -------------------------------------------------------------------
-* SPITBOL - Chapter 9
-* -------------------------------------------------------------------
-* Push(x) - Push item x onto the stack.
-* Returns the name of the top stack element.
-*
+*     expr_eval.sno - Expression evaluator using pattern side-effects.
+*     Recursive descent parser built entirely from SNOBOL4 patterns.
+*     Tests: DEFINE, TABLE, NRETURN, *func() side-effect patterns, EVAL,
+*            real/integer arithmetic, operator precedence, parentheses.
+*     Input: one arithmetic expression per line (e.g. "1+2*3", "2.5e1+0.5")
+*     Note: 'epsilon' is intentionally undefined (= null string = empty pattern).
+
          DEFINE('Push(x)')
          stk      =  TABLE()                       :(PushEnd)
-Push     stk[0]   =  stk[0] + 1                                ;* Increment the index to the first free element
-         Push     =  .stk[stk[0]]                              ;* We'll return the name of this new stack element
-         $Push    =  x                             :(NRETURN)  ;* If a value was supplied, store it there
+Push     stk[0]   =  stk[0] + 1
+         Push     =  .stk[stk[0]]
+         $Push    =  x                             :(NRETURN)
 PushEnd
-*   -------------------------------------------------------------------
-* Pop() - Remove an item from the top of the stack
-* The stk table is declared in the Push() function.
-*
          DEFINE('Pop()')                           :(PopEnd)
-Pop      Pop      =  stk[stk[0]]                               ;* Return the value currently on top of the stack
-         stk[0]   =  stk[0] - 1                    :(RETURN)   ;* Decrement the index
+Pop      Pop      =  stk[stk[0]]
+         stk[0]   =  stk[0] - 1                    :(RETURN)
 PopEnd
-*   -------------------------------------------------------------------
          DEFINE('Unary()arg,op')                   :(UnaryEnd)
 Unary    arg      =  Pop()
          op       =  Pop()
          Push()   =  EVAL(op arg)
          Unary    =  .dummy                        :(NRETURN)
 UnaryEnd
-*   -------------------------------------------------------------------
          DEFINE('Binary()op,left,right')           :(BinaryEnd)
 Binary   right    =  Pop()
          op       =  Pop()
@@ -33,7 +28,7 @@ Binary   right    =  Pop()
          Push()   =  EVAL(left ' ' op ' ' right)
          Binary   =  .dummy                        :(NRETURN)
 BinaryEnd
-*   -------------------------------------------------------------------
+
          integer  =  SPAN('0123456789')
          exponent =  ANY('eEdD') (ANY('+-') | epsilon) integer
          real     =  integer '.' (integer | epsilon) (exponent | epsilon)
@@ -53,7 +48,7 @@ BinaryEnd
 
          expr     =  *term addop *expr . *Binary()
 +                 |  *term
-*   -------------------------------------------------------------------
+
          &TRIM    =  1
 loop     line     =  INPUT                         :F(END)
          line     POS(0) expr RPOS(0)              :F(error)

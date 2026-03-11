@@ -1,4 +1,6 @@
-*     wordcount.spt - Count words in input
+*     wordcount.sno - Count words in input.
+*     Tests: BREAK/SPAN word boundary detection, hyphenated and
+*            apostrophe-joined words (it's, well-known count as one word each).
 
       &TRIM    =  1
       NUMERALS =  '0123456789'

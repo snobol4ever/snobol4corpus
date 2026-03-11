@@ -1,4 +1,8 @@
-*     word3.spt - Field parsing using BREAK/SPAN
+*     word3.sno - Record parsing using BREAK/SPAN/ARB.
+*     Tests: BREAK(x), SPAN(x), ARB backtracking, multiple captures.
+*     Input format: YYYY  Name  : Invention  (spaces flexible, no TAB requirement)
+*     Uses ARB (greedy) for name -- matches longest name before last " :".
+*     Name field is trimmed of padding (compare word2, word4).
 
       PAT      =  POS(0) BREAK(' ') . WHEN (' ' SPAN(' '))
 +                 ARB . WHO (' ' SPAN(' :'))
