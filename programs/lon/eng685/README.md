@@ -20,4 +20,4 @@ applied directly to string data in Python.
 |------|----------|------|
 | `VBGinTASA.dat` | Penn Treebank parse trees (bracket notation), 1977 sentences | ✅ |
 | `CLAWS5inTASA.dat` | CLAWS5 POS-tagged text (same sentences) | ✅ |
-| `CLAWS7inTASA.dat` | CLAWS7 POS-tagged text (same sentences, different tagset) | not referenced |
+| `CLAWS7inTASA.dat` | CLAWS7 POS-tagged text (same sentences, CLAWS7 tagset: AT, VVG, NN1, JJ) | included for completeness |
