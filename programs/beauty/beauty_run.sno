@@ -37,37 +37,44 @@ START
 *                 ppSmBump  - extra indent when inside multi-line nesting
 *                 ppLgBump  - extra width budget when no goto field present
 *
-*                 Defaults (--wide profile):  18  33  36  81   6  21
-*                 Tight profile (--tight):    11  28  31  66   4  14
+*                 Five profiles derived from corpus analysis (401 programs, quintiles):
 *
-*                 Command-line switches (all optional, override defaults):
-*                   --wide          use wide profile (default)
-*                   --tight         use tight profile
-*                   --s1=N          override ppStop[1]
-*                   --s2=N          override ppStop[2]
-*                   --s3=N          override ppStop[3]
-*                   --s4=N          override ppStop[4]
-*                   --smbump=N      override ppSmBump
-*                   --lgbump=N      override ppLgBump
+*                 Profile     s1   s2   s3   s4  SmBump LgBump  Typical use
+*                 --micro     11   26   29   55     3     21    Gimpel snippets, tiny utilities
+*                 --small     13   28   31   60     4     24    Small programs <100 lines
+*                 --medium    15   30   33   80     5     42    Moderate programs, mixed style
+*                 --large     17   32   35   96     6     54    Large programs, dense goto
+*                 --wide      19   34   37  110     7     68    TZ grammars, pattern-heavy libs
+*
+*                 Default profile: --medium
+*
+*                 Individual overrides (applied after profile, all optional):
+*                   --s1=N       ppStop[1]
+*                   --s2=N       ppStop[2]
+*                   --s3=N       ppStop[3]
+*                   --s4=N       ppStop[4]
+*                   --smbump=N   ppSmBump
+*                   --lgbump=N   ppLgBump
 *
 *                 Examples:
-*                   snobol4 beauty_run.sno --tight < prog.sno
-*                   snobol4 beauty_run.sno --s4=66 < prog.sno
-*                   snobol4 beauty_run.sno --s1=11 --s2=28 --s3=31 --s4=66 < prog.sno
+*                   snobol4 beauty_run.sno --small < prog.sno
+*                   snobol4 beauty_run.sno --large --s4=90 < prog.sno
+*                   snobol4 beauty_run.sno --s1=11 --s4=66 < prog.sno
 *
                   ppStop         =  ARRAY('1:4')
 *
-*                 Set wide defaults, then check for --tight profile override,
-*                 then apply any individual --sN / --smbump / --lgbump overrides.
+*                 Set medium defaults.
 *
-                  ppStop[1]      =  18
-                  ppStop[2]      =  33
-                  ppStop[3]      =  36
-                  ppStop[4]      =  81
-                  ppSmBump       =  6
-                  ppLgBump       =  21
+                  ppStop[1]      =  15
+                  ppStop[2]      =  30
+                  ppStop[3]      =  33
+                  ppStop[4]      =  80
+                  ppSmBump       =  5
+                  ppLgBump       =  42
 *
 *                 Parse HOST(0) for --name=value or bare --flag tokens.
+*                 Profile switches load all six values; individual overrides
+*                 then adjust any subset.  Last --profile wins.
 *
                   ppArgs         =  HOST(0)
                   ppTokPat       =  '--' (BREAK('= ') | REM) . ppTokName
@@ -75,14 +82,41 @@ START
 ppArgLoop        ppArgs          POS(0) SPAN(' ') =
                   DIFFER(ppArgs)                                                    :F(ppArgDone)
                   ppArgs         ppTokPat =                                         :F(ppArgDone)
-                  IDENT(ppTokName, 'wide')                                          :S(ppArgLoop)
-                  IDENT(ppTokName, 'tight')                                         :F(ppArgChk1)
+                  IDENT(ppTokName, 'micro')                                         :F(ppArgP2)
                   ppStop[1]      =  11
+                  ppStop[2]      =  26
+                  ppStop[3]      =  29
+                  ppStop[4]      =  55
+                  ppSmBump       =  3
+                  ppLgBump       =  21                                              :(ppArgLoop)
+ppArgP2          IDENT(ppTokName, 'small')                                          :F(ppArgP3)
+                  ppStop[1]      =  13
                   ppStop[2]      =  28
                   ppStop[3]      =  31
-                  ppStop[4]      =  66
+                  ppStop[4]      =  60
                   ppSmBump       =  4
-                  ppLgBump       =  14                                              :(ppArgLoop)
+                  ppLgBump       =  24                                              :(ppArgLoop)
+ppArgP3          IDENT(ppTokName, 'medium')                                         :F(ppArgP4)
+                  ppStop[1]      =  15
+                  ppStop[2]      =  30
+                  ppStop[3]      =  33
+                  ppStop[4]      =  80
+                  ppSmBump       =  5
+                  ppLgBump       =  42                                              :(ppArgLoop)
+ppArgP4          IDENT(ppTokName, 'large')                                          :F(ppArgP5)
+                  ppStop[1]      =  17
+                  ppStop[2]      =  32
+                  ppStop[3]      =  35
+                  ppStop[4]      =  96
+                  ppSmBump       =  6
+                  ppLgBump       =  54                                              :(ppArgLoop)
+ppArgP5          IDENT(ppTokName, 'wide')                                           :F(ppArgChk1)
+                  ppStop[1]      =  19
+                  ppStop[2]      =  34
+                  ppStop[3]      =  37
+                  ppStop[4]      =  110
+                  ppSmBump       =  7
+                  ppLgBump       =  68                                              :(ppArgLoop)
 ppArgChk1        IDENT(ppTokName, 's1')                                             :F(ppArgChk2)
                   ppStop[1]      =  +ppTokVal                                       :(ppArgLoop)
 ppArgChk2        IDENT(ppTokName, 's2')                                             :F(ppArgChk3)
