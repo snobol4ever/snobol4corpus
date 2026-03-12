@@ -1,6 +1,6 @@
 *-------------------------------------------------------------------------------------------------------------------------
--INCLUDE 'utility.inc'
--INCLUDE 'system.inc'
+-INCLUDE 'utility.sno'
+-INCLUDE 'system.sno'
          Utility()
          dirs        =   ARRAY('1:1')
          dirs[1]     =   'C:/SNOBOL4_Merge'

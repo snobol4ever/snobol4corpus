@@ -2,15 +2,15 @@
 * Backtype.sno
 *-------------------------------------------------------------------------------------------------------
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'export.inc'
--INCLUDE 'ini.inc'
--INCLUDE 'system.inc'
--INCLUDE 'URL.inc'
--INCLUDE 'HTML.inc'
--INCLUDE 'trace.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'export.sno'
+-INCLUDE 'ini.sno'
+-INCLUDE 'system.sno'
+-INCLUDE 'URL.sno'
+-INCLUDE 'HTML.sno'
+-INCLUDE 'trace.sno'
 *========== =========== === ======================================================= ====================
             $'  '       =   SPAN(' ' tab cr lf)
             $' '        =   FENCE($'  ' | epsilon)
@@ -73,8 +73,8 @@ BT02        xmlInteger      =   SPAN('0123456789') @x
             xmlAuthor       =   $'<author>' *xmlName (*xmlURL | epsilon) $'</author>'
 *========== =========== === ======================================================= ====================
 *           EXIT(3, 'Backtype.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
             curl        =   curl_easy_init()                                        :F(error)
 *           EQ(0, cc = curl_easy_setopt(curl, CURLOPT_VERBOSE, TRUE))               :F(error)
             EQ(0, cc = curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, FALSE))       :F(error)

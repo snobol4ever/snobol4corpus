@@ -1,8 +1,8 @@
 start
--INCLUDE 'utility.inc'
--INCLUDE 'ini.inc'
--INCLUDE 'build.inc'
--INCLUDE 'portable.inc'
+-INCLUDE 'utility.sno'
+-INCLUDE 'ini.sno'
+-INCLUDE 'build.sno'
+-INCLUDE 'portable.sno'
 change00    m           =
             h           =
             r           =

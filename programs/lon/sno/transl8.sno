@@ -5,25 +5,25 @@ START
 *-----------------------------------------------------------------------------------------------------------------------
             doDebug           =     0
 *-----------------------------------------------------------------------------------------------------------------------
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'match.inc'
--INCLUDE 'case.inc'
--INCLUDE 'is.inc'
--INCLUDE 'tree.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'Qize.inc'
--INCLUDE 'omega.inc'
--INCLUDE 'Gen.inc'
--INCLUDE 'TDump.inc'
--INCLUDE 'XDump.inc'
--INCLUDE 'Populate.inc'
--INCLUDE 'semantic.inc'
--INCLUDE 'opsyn.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'Trace.inc'
--INCLUDE 'transl8.inc'
--INCLUDE 'transl8english.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'match.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'is.sno'
+-INCLUDE 'tree.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'Qize.sno'
+-INCLUDE 'omega.sno'
+-INCLUDE 'Gen.sno'
+-INCLUDE 'TDump.sno'
+-INCLUDE 'XDump.sno'
+-INCLUDE 'Populate.sno'
+-INCLUDE 'semantic.sno'
+-INCLUDE 'opsyn.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'Trace.sno'
+-INCLUDE 'transl8.sno'
+-INCLUDE 'transl8english.sno'
 *---------- ----------------- ----- -------------------------------------------------------- ---------------------------
             DEFINE('InitTok(t)i,d,dbgArr,dbgName,tk,tx')                                     :(InitTokEnd)
 InitTok     i                 =     1
@@ -170,7 +170,7 @@ a1          argPos            =     argPos + 1
             arg               =     HOST(2, argPos)                                          :F(a2)
             incSuffix         =     arg                                                      :(a1)
 a2          OUTPUT            =     IDENT(incSuffix) "Must supply language!"                 :S(END)
-            incFile           =     'transl8' incSuffix '.inc'
+            incFile           =     'transl8' incSuffix '.sno'
             SLoad(incFile)                                                                   :S(a9)
             OUTPUT            =     'Unable to process include file "' incFile '"!'          :(END)
 a9

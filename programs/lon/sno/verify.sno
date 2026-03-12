@@ -1,7 +1,7 @@
 start
--include 'utility.inc'
--include 'ss.inc'
--include 'ini.inc'
+-include 'utility.sno'
+-include 'ss.sno'
+-include 'ini.sno'
          Utility()
 begin    file_pat = 'cmdscpf.bsl'
          single_quote = char(39)

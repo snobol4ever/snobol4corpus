@@ -1,9 +1,9 @@
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'match.inc'
--INCLUDE 'case.inc'
--INCLUDE 'XDump.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'match.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'XDump.sno'
 *   ----------- --- ----------------------------------- ------------
     DEFINE('XT(Q)QA,i,q,t,tot')                         :(XTEnd)
 XT  QA          =   DIFFER(Q) RSORT(Q, 2)               :F(RETURN)

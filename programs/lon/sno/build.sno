@@ -4,12 +4,12 @@
 * %date_modified: Tue Jun 19 15:08:11 2001 %
 *----------------------------------------------------------------------------------------------------------
 START
--INCLUDE    'utility.inc'
--INCLUDE    'dsw.inc'
--INCLUDE    'nmake.inc'
--INCLUDE    'ss.inc'
--INCLUDE    'build.inc'
--INCLUDE    'ini.inc'
+-INCLUDE    'utility.sno'
+-INCLUDE    'dsw.sno'
+-INCLUDE    'nmake.sno'
+-INCLUDE    'ss.sno'
+-INCLUDE    'build.sno'
+-INCLUDE    'ini.sno'
 *----------------------------------------------------------------------------------------------------------
     ContinuusFileinfo = 'build.sno %version: 10 %	%date_modified: Tue Jun 19 15:08:11 2001 %'
 *----------------------------------------------------------------------------------------------------------
@@ -851,7 +851,7 @@ RqstImageEnd
             extNow            =   FALSE
             BslOnly           =   FALSE
             EXIT(3, 'cmbuild.exe')
--INCLUDE    'external/directs.inc'
+-INCLUDE    'external/directs.sno'
 *------------------------------------------------------------------------------------------------------------------
 *   Main execution starts here. Read in command line arguments.
 *------------------------------------------------------------------------------------------------------------------

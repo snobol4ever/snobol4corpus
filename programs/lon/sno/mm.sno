@@ -1,15 +1,15 @@
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'case.inc'
--INCLUDE 'tree.inc'
--INCLUDE 'opsyn.inc'
--INCLUDE 'export.inc'
--INCLUDE 'datetime.inc'
--INCLUDE 'TDump.inc'
--INCLUDE 'Qize.inc'
--INCLUDE 'XML.inc'
--INCLUDE 'URL.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'tree.sno'
+-INCLUDE 'opsyn.sno'
+-INCLUDE 'export.sno'
+-INCLUDE 'datetime.sno'
+-INCLUDE 'TDump.sno'
+-INCLUDE 'Qize.sno'
+-INCLUDE 'XML.sno'
+-INCLUDE 'URL.sno'
 *           ----------- --- ------------------------------------- ------------
             DEFINE('TT(t,s)f,r')                                  :(TTEnd)
 TT          s           =   IDENT(s) 0

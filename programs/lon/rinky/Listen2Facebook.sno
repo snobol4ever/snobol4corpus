@@ -6,9 +6,9 @@
 *---------- FOR every page ... ------------------------------------------------
 *---------- FOR every chunk/entry ... -----------------------------------------
 *-------------------------------------------------------------------------------------------------------
--INCLUDE '5ivesAlive.inc'
--INCLUDE 'Pump.inc'
--INCLUDE 'JSON.inc'
+-INCLUDE '5ivesAlive.sno'
+-INCLUDE 'Pump.sno'
+-INCLUDE 'JSON.sno'
 *========== =========== === ======================================================= ====================
             &MAXLNGTH   =   4194304
             xListener   =   'Listen2Facebook'
@@ -61,9 +61,9 @@
             fbColumns[c = c + 1]  =  column("message_japanese", NULL, *NULL)
 *---------- ----------- --- ------------------------------------------------------- --------------------
             EXIT(3, xListener '.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
--INCLUDE    'sqlncli.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
+-INCLUDE    'sqlncli.sno'
             sDirPath = GetCurrentDirectory()
             hProcess = GetCurrentProcess()
             hModule = GetModuleHandle()

@@ -2,28 +2,28 @@
 * Technorati-search.sno
 *-------------------------------------------------------------------------------------------------------
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'URL.inc'
--INCLUDE 'Qize.inc'
--INCLUDE 'opsyn.inc'
--INCLUDE 'case.inc'
--INCLUDE 'omega.inc'
--INCLUDE 'Trace.inc'
--INCLUDE 'RANDOM.inc'
--INCLUDE 'HTTP.inc'
--INCLUDE 'XML.inc'
--INCLUDE 'XDump.inc'
--INCLUDE 'stack.inc'
--INCLUDE 'counter.inc'
--INCLUDE 'semantic.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'URL.sno'
+-INCLUDE 'Qize.sno'
+-INCLUDE 'opsyn.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'omega.sno'
+-INCLUDE 'Trace.sno'
+-INCLUDE 'RANDOM.sno'
+-INCLUDE 'HTTP.sno'
+-INCLUDE 'XML.sno'
+-INCLUDE 'XDump.sno'
+-INCLUDE 'stack.sno'
+-INCLUDE 'counter.sno'
+-INCLUDE 'semantic.sno'
 *========== =========== === =================================================== ====================
             doParseTree =   FALSE
             doHTTP      =   TRUE
             xTrace      =   5
 *---------- ----------- --- ----------------------------------------------- ----------------------------
--INCLUDE    'HTML.inc'
+-INCLUDE    'HTML.sno'
             $'  '       =   SPAN(' ' tab cr lf)
             $' '        =   FENCE($'  ' | epsilon)
             xInt        =   TY(1, 'xInt', SPAN('0123456789'))
@@ -101,8 +101,8 @@ START
             xTRUrl      =   'http://technorati.com/search'
 *========== =========== === =================================================== ====================
 *           EXIT(3, 'Technorati.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
             HTTP_Init()
             SETEXIT(.LErrExit)
             &ERRLIMIT   =   1

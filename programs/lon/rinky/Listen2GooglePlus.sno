@@ -4,9 +4,9 @@
 *---------- FOR all topics ... ------------------------------------------------
 *---------- FOR every page ... ------------------------------------------------
 *-------------------------------------------------------------------------------------------------------
--INCLUDE '5ivesAlive.inc'
--INCLUDE 'JSON.inc'
--INCLUDE 'MoreInput.inc'
+-INCLUDE '5ivesAlive.sno'
+-INCLUDE 'JSON.sno'
+-INCLUDE 'MoreInput.sno'
 *========== =========== === ======================================================= ====================
             xListener   =   'Listen2GooglePlus'
             userAgent   =   '5ivesAlive/1.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)'
@@ -30,9 +30,9 @@
             gpAlt       =   ('"' BREAK('"') '"') . gpxAlt . *assign(.iQT, iQT + 1) . *assign(.xQT[iQT], gpxAlt)
 *---------- ----------- --- ------------------------------------------------------- --------------------
             EXIT(3, xListener '.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
--INCLUDE    'sqlncli.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
+-INCLUDE    'sqlncli.sno'
             sDirPath = GetCurrentDirectory()
             hProcess = GetCurrentProcess()
             hModule = GetModuleHandle()

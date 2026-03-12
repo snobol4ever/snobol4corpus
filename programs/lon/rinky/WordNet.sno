@@ -1,8 +1,8 @@
 START
--INCLUDE    'global.inc'
--INCLUDE    'assign.inc'
--INCLUDE    'XDump.inc'
--INCLUDE    'Qize.inc'
+-INCLUDE    'global.sno'
+-INCLUDE    'assign.sno'
+-INCLUDE    'XDump.sno'
+-INCLUDE    'Qize.sno'
 *---------- ------------------------------------------------------------------------------------------------------------
             pos2item            =   TABLE()
             pos2item['n']       =   'noun'

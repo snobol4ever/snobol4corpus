@@ -3,31 +3,31 @@
 * Author:  Lon Cherryholmes
 *---------------------------------------------------------------------------------------------------
 START
--INCLUDE 'global.inc'
--INCLUDE 'is.inc'
--INCLUDE 'io.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'match.inc'
--INCLUDE 'case.inc'
--INCLUDE 'Qize.inc'
--INCLUDE 'XDump.inc'
--INCLUDE 'counter.inc'
--INCLUDE 'stack.inc'
--INCLUDE 'tree.inc'
--INCLUDE 'ShiftReduce.inc'
--INCLUDE 'detect.inc'
--INCLUDE 'instrument.inc'
--INCLUDE 'normalize.inc'
--INCLUDE 'Populate.inc'
--INCLUDE 'semantic.inc'
--INCLUDE 'omega.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'Gen.inc'
--INCLUDE 'TDump.inc'
--INCLUDE 'TGen.inc'
--INCLUDE 'pp.inc'
--INCLUDE 'ebnf.inc'
--INCLUDE 'trace.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'is.sno'
+-INCLUDE 'io.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'match.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'Qize.sno'
+-INCLUDE 'XDump.sno'
+-INCLUDE 'counter.sno'
+-INCLUDE 'stack.sno'
+-INCLUDE 'tree.sno'
+-INCLUDE 'ShiftReduce.sno'
+-INCLUDE 'detect.sno'
+-INCLUDE 'instrument.sno'
+-INCLUDE 'normalize.sno'
+-INCLUDE 'Populate.sno'
+-INCLUDE 'semantic.sno'
+-INCLUDE 'omega.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'Gen.sno'
+-INCLUDE 'TDump.sno'
+-INCLUDE 'TGen.sno'
+-INCLUDE 'pp.sno'
+-INCLUDE 'ebnf.sno'
+-INCLUDE 'trace.sno'
 *---------------------------------------------------------------------------------------------------
                doDebug        =  1
                doDetect       =  FALSE
@@ -101,7 +101,7 @@ main00         ebnfStr        =  Read(ebnfFile, .t8Map)                         
                ppSetStyle('yy')
                pp(bnf)
                ENDFILE(3)
-               snonm          =  'ebnf-' basenm '.inc'
+               snonm          =  'ebnf-' basenm '.sno'
                OUTPUT(.OUTPUT, 3, snonm)                                            :F(xerr)
                ppSetStyle('sno')
                ppOps          =  doExtendedOps

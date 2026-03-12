@@ -5,10 +5,10 @@
 *---------- FOR every search alternative ... ----------------------------------
 *---------- FOR every city ... ------------------------------------------------
 *-------------------------------------------------------------------------------------------------------
--INCLUDE '5ivesAlive.inc'
--INCLUDE 'Pump.inc'
--INCLUDE 'JSON.inc'
--INCLUDE 'MoreInput.inc'
+-INCLUDE '5ivesAlive.sno'
+-INCLUDE 'Pump.sno'
+-INCLUDE 'JSON.sno'
+-INCLUDE 'MoreInput.sno'
 *========== =========== === ======================================================= ====================
             xListener   =   'Listen2CityGrid'
             userAgent   =   '5ivesAlive/1.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)'
@@ -28,9 +28,9 @@
 +                           )
 *---------- ----------- --- ------------------------------------------------------- --------------------
             EXIT(3, xListener '.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
--INCLUDE    'sqlncli.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
+-INCLUDE    'sqlncli.sno'
             sDirPath = GetCurrentDirectory()
             hProcess = GetCurrentProcess()
             hModule = GetModuleHandle()

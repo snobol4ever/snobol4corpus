@@ -19,10 +19,10 @@ Run from the SNOBOL4-corpus root so paths resolve correctly.
 
 | File | Purpose | Exports |
 |------|---------|---------|
-| `stack.inc` | General purpose stack | `stack_init` `stack_push` `stack_pop` `stack_peek` `stack_top` `stack_depth` |
-| `case.inc` | Case conversion + case-insensitive matching | `lwr` `upr` `cap` `icase` |
-| `math.inc` | Numeric utilities | `max` `min` `abs` `sign` `gcd` `lcm` |
-| `string.inc` | String utilities | `lpad` `rpad` `ltrim` `rtrim` `trim` `repeat` `contains` `startswith` `endswith` `index` |
+| `stack.sno` | General purpose stack | `stack_init` `stack_push` `stack_pop` `stack_peek` `stack_top` `stack_depth` |
+| `case.sno` | Case conversion + case-insensitive matching | `lwr` `upr` `cap` `icase` |
+| `math.sno` | Numeric utilities | `max` `min` `abs` `sign` `gcd` `lcm` |
+| `string.sno` | String utilities | `lpad` `rpad` `ltrim` `rtrim` `trim` `repeat` `contains` `startswith` `endswith` `index` |
 
 ## Design Rules
 
@@ -35,15 +35,15 @@ Every library file follows these rules:
 4. **NRETURN for push-like functions** — enables pattern side-effect use:
    `subject (stack_push(x) FAIL | ...)` pushes as a side-effect
 5. **FRETURN on empty/absent** — consistent with SNOBOL4 convention
-6. **Tested** — each file has a corresponding `crosscheck/library/test_*.inc`
+6. **Tested** — each file has a corresponding `crosscheck/library/test_*.sno`
 
 ## Crosscheck Tests
 
 ```
-crosscheck/library/test_stack.inc
-crosscheck/library/test_case.inc
-crosscheck/library/test_math.inc
-crosscheck/library/test_string.inc
+crosscheck/library/test_stack.sno
+crosscheck/library/test_case.sno
+crosscheck/library/test_math.sno
+crosscheck/library/test_string.sno
 ```
 
 Each test prints expected output in a header comment and produces exactly
@@ -52,7 +52,7 @@ that output when run correctly.
 ## Relationship to `programs/inc/`
 
 `programs/inc/` contains Lon's working include files, some of which overlap
-with this library (`case.inc`, `stack.inc`, `counter.inc`, etc.). Those files
+with this library (`case.sno`, `stack.sno`, `counter.sno`, etc.). Those files
 are production code — they may depend on globals like `xTrace`, use
 application-specific conventions, or have Windows-era line endings.
 
@@ -61,8 +61,8 @@ no platform assumptions, consistent naming, fully documented.
 
 ## Adding a New Library File
 
-1. Create `library/newfile.inc` — DEFINE-only, no `END`
+1. Create `library/newfile.sno` — DEFINE-only, no `END`
 2. Header comment listing every exported function with signature and brief description
-3. Create `crosscheck/library/test_newfile.inc` — expected output in header comment
+3. Create `crosscheck/library/test_newfile.sno` — expected output in header comment
 4. Verify on both csnobol4 and spitbol
 5. Add to this README table

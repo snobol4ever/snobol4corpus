@@ -4,8 +4,8 @@ START
             digits         =   '0123456789'
             maxmSSdb       =   'hsdc'
 *---------------------------------------------------------------------------------------------------------------
--include    'utility.inc'
--include    'ss.inc'
+-include    'utility.sno'
+-include    'ss.sno'
 *---------------------------------------------------------------------------------------------------------------
             define('workfolder(ssnm,proj,date)')                                    :(workfolder_end)
 workfolder  workfolder     =   proj

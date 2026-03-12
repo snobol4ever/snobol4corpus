@@ -1,5 +1,5 @@
 *-------------------------------------------------------------------------------------------------------------------------
--include    'portable.inc'
+-include    'portable.sno'
             optSpcPat      =     (SPAN(' ') | '')
             testPat        =     'test' optSpcPat
             getAttrPat     =     'get' ('New' | 'Old' | '') ('Int' | '') . x 'Attr' ('State' | 'Len' | '') optSpcPat

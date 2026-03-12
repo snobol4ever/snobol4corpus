@@ -4,7 +4,7 @@ START
          &FULLSCAN       =  1
          dodebug         =  0
 
--INCLUDE 'io.inc'
+-INCLUDE 'io.sno'
 
          DEFINE('psh(x)')
          DEFINE('pul()')
@@ -21,7 +21,7 @@ top      IDENT(psh_pul)                                                 :s(FRETU
          top             =  .val(psh_pul)                               :(NRETURN)
 psh_end
 
--INCLUDE 'Gen.inc'
+-INCLUDE 'Gen.sno'
 
          DEFINE('genproto(id)count,dlm,i')                              :(genproto_end)
 genproto genproto        =  .dummy
@@ -50,7 +50,7 @@ genprot5 i               =  LT(i, count) i + 1                          :f(genpr
 genprot6 gen(')' nl)                                                    :(NRETURN)
 genproto_end
 
--INCLUDE 'assign.inc'
+-INCLUDE 'assign.sno'
 
         DEFINE('gendict()dict,dictarr,i')                               :(gendict_end)
 gendict gendict          =  .dummy
@@ -88,7 +88,7 @@ debug    debug           =  .dummy
          OUTPUT          =  str                                         :(NRETURN)
 debug_end
 
--INCLUDE 'case.inc'
+-INCLUDE 'case.sno'
 
          DEFINE('cstring(str)chr')                                      :(cstring_end)
 cstring  cstring         =

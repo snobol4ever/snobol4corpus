@@ -1,7 +1,7 @@
 *---------- ----------------- ----- -------------------------------------------------- -----------------------------
 start
--INCLUDE    'utility.inc'
--INCLUDE    'ss.inc'
+-INCLUDE    'utility.sno'
+-INCLUDE    'ss.sno'
             testing           =
             Utility()
             csvInputHeader    =     'Branch,Component,Status,Vantives'

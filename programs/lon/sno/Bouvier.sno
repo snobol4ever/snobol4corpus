@@ -1,9 +1,9 @@
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'match.inc'
--INCLUDE 'case.inc'
--INCLUDE 'Gen.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'match.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'Gen.sno'
     &MAXLNGTH   =   2097152
 *   ----------- --------------------------------------- ---------------
     DEFINE('XYZ(XYZ)')                                  :(XYZEnd)

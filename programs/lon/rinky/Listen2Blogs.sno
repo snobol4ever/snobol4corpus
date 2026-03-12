@@ -5,9 +5,9 @@
 *---------- FOR every page ... ------------------------------------------------
 *---------- FOR every chunk/entry ... -----------------------------------------
 *-------------------------------------------------------------------------------------------------------
--INCLUDE '5ivesAlive.inc'
--INCLUDE 'Pump.inc'
--INCLUDE 'XML.inc'
+-INCLUDE '5ivesAlive.sno'
+-INCLUDE 'Pump.sno'
+-INCLUDE 'XML.sno'
 *========== =========== === ======================================================= ====================
             xListener   =   'Listen2Blogs'
             userAgent   =   '5ivesAlive/1.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)'
@@ -74,9 +74,9 @@ SQLDate     dt          ?   POS(0) bsYear . year
 SQLDateEnd
 *---------- ----------- --- ------------------------------------------------------- --------------------
             EXIT(3, xListener '.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
--INCLUDE    'sqlncli.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
+-INCLUDE    'sqlncli.sno'
             sDirPath = GetCurrentDirectory()
             hProcess = GetCurrentProcess()
             hModule = GetModuleHandle()

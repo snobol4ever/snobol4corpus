@@ -1,7 +1,7 @@
 *-------------------------------------------------------------------------------------------------------
 START
--INCLUDE 'portable.inc'
--INCLUDE 'curl.inc'
+-INCLUDE 'portable.sno'
+-INCLUDE 'curl.sno'
 *========== =========== === ======================================================= ====================
             $' '        =   SPAN(' ' cr lf) | epsilon
             cookies     =   'C:/SPITBOL/Cookies.txt'

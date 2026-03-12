@@ -96,8 +96,8 @@
        n = n + 1; p[n] = pdbtext '/' *txttfx '/' *dpfx;               r[n] = *(prj '/' pfx '/' tfx)
        n = n + 1; p[n] = pdbtext '/' *txttfx '/' *i18nifx;            r[n] = *(prj '/common/' ifx '/' tfx)
 
--include 'host.inc'
--include 'assign.inc'
+-include 'host.sno'
+-include 'assign.sno'
 
        infilenm =
        nprojnm  =

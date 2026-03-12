@@ -1,6 +1,6 @@
 *-------------------------------------------------------------------------------------------------------------------------
 START
--include '/home/build/bin/portable.inc'
+-include '/home/build/bin/portable.sno'
          nl          =   char(10)
          $' '        =   span(' ')
          integer     =   span('0123456789')

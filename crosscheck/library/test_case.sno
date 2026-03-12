@@ -10,7 +10,7 @@
 *   ok: icase HeLLo
 *   no match ok
 *-----------------------------------------------------------------------------------
--include 'case.inc'
+-include 'case.sno'
 
         &TRIM = 1
 

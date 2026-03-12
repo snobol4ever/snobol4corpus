@@ -1,11 +1,11 @@
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'Qize.inc'
--INCLUDE 'Gen.inc'
--INCLUDE 'XDump.inc'
--INCLUDE 'OConners.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'Qize.sno'
+-INCLUDE 'Gen.sno'
+-INCLUDE 'XDump.sno'
+-INCLUDE 'OConners.sno'
 *------ ----------- --- ----------------------------------- -----------------------------
         $'  '       =   SPAN(' ' tab)
         $' '        =   $'  ' | epsilon

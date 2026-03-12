@@ -2,22 +2,22 @@
 * Activists.sno
 *-------------------------------------------------------------------------------------------------------
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'URL.inc'
--INCLUDE 'Qize.inc'
--INCLUDE 'opsyn.inc'
--INCLUDE 'case.inc'
--INCLUDE 'omega.inc'
--INCLUDE 'RANDOM.inc'
--INCLUDE 'HTTP.inc'
--INCLUDE 'XML.inc'
--INCLUDE 'XDump.inc'
--INCLUDE 'stack.inc'
--INCLUDE 'counter.inc'
--INCLUDE 'semantic.inc'
--INCLUDE 'export.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'URL.sno'
+-INCLUDE 'Qize.sno'
+-INCLUDE 'opsyn.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'omega.sno'
+-INCLUDE 'RANDOM.sno'
+-INCLUDE 'HTTP.sno'
+-INCLUDE 'XML.sno'
+-INCLUDE 'XDump.sno'
+-INCLUDE 'stack.sno'
+-INCLUDE 'counter.sno'
+-INCLUDE 'semantic.sno'
+-INCLUDE 'export.sno'
 *========== =========== === =================================================== ====================
             dir         =   'C:/LegalEarth/Activists'
             doHTTP      =   TRUE
@@ -129,8 +129,8 @@ START
 +                           )
 *========== =========== === =================================================== ====================
 *           EXIT(3, 'Activists.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
 L00         HTTP_Init('Activists')                                              :F(Yikes)
             INPUT(.input, 3, 'Activists.csv')                                   :F(Yikes)
             OUTPUT      =   input                                               :F(Yikes)

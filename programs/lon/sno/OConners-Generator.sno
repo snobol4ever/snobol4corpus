@@ -1,9 +1,9 @@
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'Qize.inc'
--INCLUDE 'OConners-Generator.inc'
--INCLUDE 'OConners.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'Qize.sno'
+-INCLUDE 'OConners-Generator.sno'
+-INCLUDE 'OConners.sno'
 *------ ----------- --- ----------------------------------------------- ------------------
         EXIT(3, 'OConners-Generator.exe')
 A0      g           =   FALSE

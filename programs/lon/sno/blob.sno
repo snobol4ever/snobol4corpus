@@ -1,12 +1,12 @@
 *-------------------------------------------------------------------------------------------------------------------
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'case.inc'
--INCLUDE 'system.inc'
--INCLUDE 'utility.inc'
--INCLUDE 'random.inc'
--INCLUDE 'datetime.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'system.sno'
+-INCLUDE 'utility.sno'
+-INCLUDE 'random.sno'
+-INCLUDE 'datetime.sno'
 *---------- --------------- --- --------------------------------------------------- --------------------------------
 *           &MAXLNGTH       =   8388608
             &MAXLNGTH       =   1048576
@@ -174,7 +174,7 @@ START
             SQL_10007       =   "DB-Library Error 10007:"
 +                               " General SQL Server error: Check messages from the SQL Server." nl
 *-------------------------------------------------------------------------------------------------------------------
--INCLUDE 'BCP.inc'
+-INCLUDE 'BCP.sno'
 *-------------------------------------------------------------------------------------------------------------------
             sqlDataType                     =   TABLE()
             sqlDataType['bit']              =   104

@@ -1,9 +1,9 @@
 *-------------------------------------------------------------------------------------------------------
 * Listen2TwitterStream.sno
 *-------------------------------------------------------------------------------------------------------
--INCLUDE '5ivesAlive.inc'
--INCLUDE 'JSON.inc'
--INCLUDE 'MoreInput.inc'
+-INCLUDE '5ivesAlive.sno'
+-INCLUDE 'JSON.sno'
+-INCLUDE 'MoreInput.sno'
 *========== =========== === ======================================================= ====================
             xListener   =   'Listen2TwitterStream'
             cookies     =   xListener 'Cookies.txt'
@@ -52,8 +52,8 @@ TS23        iTT         =   iTT + 1
 ConfigureEnd
 *---------- ----------- --- ------------------------------------------------------- --------------------
             EXIT(3, xListener '.exe')
--INCLUDE    'env.inc'
--INCLUDE    'sqlncli.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'sqlncli.sno'
             sDirPath = GetCurrentDirectory()
             hProcess = GetCurrentProcess()
             hModule = GetModuleHandle()

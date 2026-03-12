@@ -1,13 +1,13 @@
 START
  doDebug = 3
--INCLUDE 'global.inc'
--INCLUDE 'match.inc'
--INCLUDE 'case.inc'
--INCLUDE 'omega.inc'
--INCLUDE 'opsyn.inc'
--INCLUDE 'Populate.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'XML.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'match.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'omega.sno'
+-INCLUDE 'opsyn.sno'
+-INCLUDE 'Populate.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'XML.sno'
 *-------------------------------------------------------------------------------
             white             =     SPAN(' ' tab lf vt ff cr fs gs rs us)
 +                             |     EN_QUAD

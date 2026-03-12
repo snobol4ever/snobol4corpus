@@ -5,9 +5,9 @@
 *---------- FOR every page ... ------------------------------------------------
 *---------- FOR every chunk/entry ... -----------------------------------------
 *-------------------------------------------------------------------------------------------------------
--INCLUDE '5ivesAlive.inc'
--INCLUDE 'Pump.inc'
--INCLUDE 'XML.inc'
+-INCLUDE '5ivesAlive.sno'
+-INCLUDE 'Pump.sno'
+-INCLUDE 'XML.sno'
 *========== =========== === ======================================================= ====================
             &MAXLNGTH   =   4194304
             xListener   =   'Listen2Radian6'
@@ -93,9 +93,9 @@ SQLDate1    SQLDate     =   year '-' month '-' day ' ' hour ':' minute ':' secon
 SQLDateEnd
 *---------- ----------- --- ------------------------------------------------------- --------------------
             EXIT(3, xListener '.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
--INCLUDE    'sqlncli.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
+-INCLUDE    'sqlncli.sno'
             Args(xListener)                                                         :F(END)
             &STLIMIT    =   EQ(xDebug, FALSE) -1                                    :F(debuggo)
 *---------- ----------- --- ------------------------------------------------------- --------------------

@@ -4,13 +4,13 @@
 * First Created: February 16, 2005
 *---------- ------------------- --- ------------------------------------------- --------------------------------
 START
--INCLUDE 'global.inc'
--INCLUDE 'case.inc'
--INCLUDE 'is.inc'
--INCLUDE 'match.inc'
--INCLUDE 'ss.inc'
--INCLUDE 'system.inc'
--INCLUDE 'utility.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'is.sno'
+-INCLUDE 'match.sno'
+-INCLUDE 'ss.sno'
+-INCLUDE 'system.sno'
+-INCLUDE 'utility.sno'
 *---------- ------------------- --- ------------------------------------------- --------------------------------
             INTEGER_LITERAL     =   *DECIMAL_LITERAL FENCE(ANY('Ll') | '')
 +                               |   *HEX_LITERAL FENCE(ANY('Ll') | '')

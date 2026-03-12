@@ -1,12 +1,12 @@
 *-------------------------------------------------------------------------------------------------------------------
 START
--INCLUDE 'global.inc'
--INCLUDE 'assign.inc'
--INCLUDE 'case.inc'
--INCLUDE 'system.inc'
--INCLUDE 'utility.inc'
--INCLUDE 'random.inc'
--INCLUDE 'datetime.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'assign.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'system.sno'
+-INCLUDE 'utility.sno'
+-INCLUDE 'random.sno'
+-INCLUDE 'datetime.sno'
 *---------- --------------- --- --------------------------------------------------- --------------------------------
             cString         =   'L"' ARBNO(bSlash '"' | NOTANY('"')) '"'
             addMsg          =   'gMsgs.addMsg('

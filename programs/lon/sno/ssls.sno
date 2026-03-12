@@ -1,9 +1,9 @@
 *------------------------------------------------------------------------------------------------
--INCLUDE 'global.inc'
--INCLUDE 'case.inc'
--INCLUDE 'host.inc'
--INCLUDE 'ss.inc'
--INCLUDE 'utility.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'host.sno'
+-INCLUDE 'ss.sno'
+-INCLUDE 'utility.sno'
 *------- ----------- ----- ---------------------------------------- -----------------------------
          EXIT(3, 'ssls.exe')
          Utility()

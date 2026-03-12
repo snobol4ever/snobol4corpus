@@ -3,12 +3,12 @@
 * Author: Lon Cherryholmes
 *-------------------------------------------------------------------------------------------------------------------------
 START
--INCLUDE 'portable.inc'
--INCLUDE 'transl8.inc'
--INCLUDE 'transl8tweetish.inc'
-*-INCLUDE 'transl8html.inc'
-*-INCLUDE 'transl8ebnf.inc'
-*-INCLUDE 'transl8mssql.inc'
+-INCLUDE 'portable.sno'
+-INCLUDE 'transl8.sno'
+-INCLUDE 'transl8tweetish.sno'
+*-INCLUDE 'transl8html.sno'
+*-INCLUDE 'transl8ebnf.sno'
+*-INCLUDE 'transl8mssql.sno'
 
    &MAXLNGTH      =   2097152
    DATA('token(name,expr,patr,repl,stats)')
@@ -20,7 +20,7 @@ a1 argPos         =   argPos + 1
    incSuffix      =   arg              :(a1)
 
 a2 OUTPUT         =   IDENT(incSuffix) "Must supply language!"          :S(END)
-   incFile        =   'transl8' incSuffix '.inc'
+   incFile        =   'transl8' incSuffix '.sno'
    SLoad(incFile)                                                       :S(a9)
    OUTPUT         =   'Unable to process include file "' incFile '"!'   :(END)
 a9

@@ -1,15 +1,15 @@
--INCLUDE '5ivesAlive.inc'
--INCLUDE 'JSON.inc'
--INCLUDE 'MoreInput.inc'
+-INCLUDE '5ivesAlive.sno'
+-INCLUDE 'JSON.sno'
+-INCLUDE 'MoreInput.sno'
 *---------- ----------- --- ---------------------------------------------------
             eUrl        =   *( "http://query.yahooapis.com/v1/public/yql?format=json&q="
 +                              URLEncode('SELECT * FROM geo.places WHERE text = "' name '"')
 +                            )
 *---------- ----------- --- ---------------------------------------------------
             EXIT(3, 'Geo.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
--INCLUDE    'sqlncli.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
+-INCLUDE    'sqlncli.sno'
             Args('Geo')                                                         :F(END)
             &STLIMIT    =   EQ(xDebug, FALSE) -1                                :F(debuggo)
 *========== =========== === ===================================================

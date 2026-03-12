@@ -1,5 +1,5 @@
 *-------------------------------------------------------------------------------------------------------------------------
--INCLUDE    'utility.inc'
+-INCLUDE    'utility.sno'
 *---------- ----------- ----- ----------------------------------------------------------- -------------------------------
 main        Utility()
             snoVar      =     (POS(0) | NOTANY(&UCASE &LCASE digits '_')) . lft
@@ -83,7 +83,7 @@ main        Utility()
 
             argPos      =     HOST(3)
             drvNme      =     HOST(2, argPos)                                             :f(usage)
-            lsNames     =     drvNme '/*.sno' ' ' drvNme '/*.inc'
+            lsNames     =     drvNme '/*.sno' ' ' drvNme '/*.sno'
             lsResp      =     system('@-ls', '-1 ' lsNames)
 main05      lsResp      POS(0) BREAK(nl) . srcFile . tgtFile nl =                         :f(END)
             srcFile     '-new.' LEN(3) RPOS(0)                                            :s(main05)

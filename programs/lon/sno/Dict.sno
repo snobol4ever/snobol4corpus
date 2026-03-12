@@ -1,14 +1,14 @@
 *START
-*-INCLUDE 'global.inc'
-*-INCLUDE 'assign.inc'
-*-INCLUDE 'match.inc'
-*-INCLUDE 'case.inc'
-*-INCLUDE 'tree.inc'
-*-INCLUDE 'ReadWrite.inc'
-*-INCLUDE 'Qize.inc'
-*-INCLUDE 'Gen.inc'
-*-INCLUDE 'TDump.inc'
-*-INCLUDE 'XDump.inc'
+*-INCLUDE 'global.sno'
+*-INCLUDE 'assign.sno'
+*-INCLUDE 'match.sno'
+*-INCLUDE 'case.sno'
+*-INCLUDE 'tree.sno'
+*-INCLUDE 'ReadWrite.sno'
+*-INCLUDE 'Qize.sno'
+*-INCLUDE 'Gen.sno'
+*-INCLUDE 'TDump.sno'
+*-INCLUDE 'XDump.sno'
 *---------- --------------- --- ------------------------------------------- ------------
             DEFINE('CideOpen(letter)dictDir,dictFile')                      :(CideOpenEnd)
 CideOpen    dictDir         =   "C:/LegalEarth/English/dict/gcide-0.52"

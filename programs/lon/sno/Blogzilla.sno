@@ -2,14 +2,14 @@
 * Blogzilla.sno
 *-------------------------------------------------------------------------------------------------------
 START
--INCLUDE '../global.inc'
--INCLUDE '../assign.inc'
--INCLUDE '../ReadWrite.inc'
--INCLUDE '../export.inc'
--INCLUDE '../ini.inc'
--INCLUDE '../system.inc'
--INCLUDE '../URL.inc'
--INCLUDE '../HTML.inc'
+-INCLUDE '../global.sno'
+-INCLUDE '../assign.sno'
+-INCLUDE '../ReadWrite.sno'
+-INCLUDE '../export.sno'
+-INCLUDE '../ini.sno'
+-INCLUDE '../system.sno'
+-INCLUDE '../URL.sno'
+-INCLUDE '../HTML.sno'
 *========== =========== === ======================================================= ====================
             $'  '       =   SPAN(' ' tab cr lf )
             $' '        =   FENCE($'  ' | epsilon)
@@ -260,8 +260,8 @@ ArgsErr3    OUTPUT      =   'Error: Missing argument input.'                    
 ArgsEnd
 *========== =========== === ======================================================= ====================
 *           EXIT(3, 'Blogzilla.exe')
--INCLUDE    'env.inc'
--INCLUDE    'curl.inc'
+-INCLUDE    'env.sno'
+-INCLUDE    'curl.sno'
             Args()                                                                  :F(END)
             system("@-rm", cookies)
             curl        =   curl_easy_init()                                        :F(error)

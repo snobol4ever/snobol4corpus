@@ -1,7 +1,7 @@
 *-------------------------------------------------------------------------------------------------------------------------
 START
--INCLUDE    'utility.inc'
--INCLUDE    'dsw.inc'
+-INCLUDE    'utility.sno'
+-INCLUDE    'dsw.sno'
 *---------- ----------------- ----- -------------------------------------------------------- -----------------------------
             ident             =     ANY(&UCASE &LCASE '_') (SPAN(&UCASE &LCASE '_' digits) | '')
             project           =     POS(0) 'Project: "' ident '"=' BREAK(' ') . dsp_infn

@@ -6,25 +6,25 @@
 * Version:       0.30
 *---------------------------------------------------------------------------------------------------
 START
--INCLUDE 'global.inc'
--INCLUDE 'is.inc'
--INCLUDE 'FENCE.inc'
--INCLUDE 'io.inc'
--INCLUDE 'case.inc'
--INCLUDE 'assign.inc'_
--INCLUDE 'match.inc'
--INCLUDE 'counter.inc'
--INCLUDE 'stack.inc'
--INCLUDE 'tree.inc'
--INCLUDE 'ShiftReduce.inc'
--INCLUDE 'TDump.inc'
--INCLUDE 'Gen.inc'
--INCLUDE 'Qize.inc'
--INCLUDE 'ReadWrite.inc'
--INCLUDE 'XDump.inc'
--INCLUDE 'semantic.inc'
--INCLUDE 'omega.inc'
--INCLUDE 'trace.inc'
+-INCLUDE 'global.sno'
+-INCLUDE 'is.sno'
+-INCLUDE 'FENCE.sno'
+-INCLUDE 'io.sno'
+-INCLUDE 'case.sno'
+-INCLUDE 'assign.sno'_
+-INCLUDE 'match.sno'
+-INCLUDE 'counter.sno'
+-INCLUDE 'stack.sno'
+-INCLUDE 'tree.sno'
+-INCLUDE 'ShiftReduce.sno'
+-INCLUDE 'TDump.sno'
+-INCLUDE 'Gen.sno'
+-INCLUDE 'Qize.sno'
+-INCLUDE 'ReadWrite.sno'
+-INCLUDE 'XDump.sno'
+-INCLUDE 'semantic.sno'
+-INCLUDE 'omega.sno'
+-INCLUDE 'trace.sno'
 
  			&FULLSCAN      =  1
                   &MAXLNGTH      =  524288

@@ -1,9 +1,9 @@
 *-------------------------------------------------------------------------------------------------------------------------
 START
--INCLUDE    'utility.inc'
+-INCLUDE    'utility.sno'
 *---------- ----------------- ----- -------------------------------------------------- -----------------------------
             Utility()
-            findResult        =     system('@-find', '. ( -name "*.sno" -o -name "*.inc" ) -print')
+            findResult        =     system('@-find', '. ( -name "*.sno" -o -name "*.sno" ) -print')
 main05      findResult        POS(0) BREAK(nl) . findFile nl =                         :f(main30)
             INPUT(.snoInput, 3, findFile)                                              :f(ioerr)
 main10      snoLine           =     snoInput                                           :f(main25)

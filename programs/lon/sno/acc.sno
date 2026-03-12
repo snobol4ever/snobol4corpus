@@ -1,9 +1,9 @@
 *-------------------------------------------------------------------------------------------------------------------------
 start
--INCLUDE    'utility.inc'
--INCLUDE    'ss.inc'
--INCLUDE    'ini.inc'
--INCLUDE    'build.inc'
+-INCLUDE    'utility.sno'
+-INCLUDE    'ss.sno'
+-INCLUDE    'ini.sno'
+-INCLUDE    'build.sno'
 *---------- ----------------- ----- -------------------------------------------------------- -----------------------------
             DEFINE('PreQualify(river,host,mode,directory)fileName,solution,ini2,actual,'
 +                 'prequalify_log_nm,prequalify_log')                                        :(PreQualifyEnd)

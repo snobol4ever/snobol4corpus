@@ -1,0 +1,69 @@
+*-----------------------------------------------------------------------------------
+* stack.sno  --  General purpose stack
+*
+* Exports:
+*   stack_init()          clear the stack
+*   stack_push(x)         push x; NRETURN (for use as pattern side-effect)
+*   stack_pop()           pop and return top value; FRETURN if empty
+*   stack_pop(var)        pop top value into named variable; FRETURN if empty
+*   stack_peek()          return top value without popping; FRETURN if empty
+*   stack_top()           return name of top value cell; FRETURN if empty
+*                         (use as conditional assignment target in patterns:
+*                          pattern . stack_top()  stores match into top of stack)
+*   stack_depth()         return depth as integer >= 0
+*
+* Internal global:  stk  (slink chain, null = empty)
+* DATA type:        slink(snext, sval)
+*   Prefixed to avoid collision with application DATA/variable names.
+*
+* Usage:
+*   -include 'stack.sno'
+*   ...
+*   stack_init()
+*   stack_push('hello')
+*   stack_push('world')
+*   OUTPUT = stack_peek()   ;* world  (stack unchanged)
+*   OUTPUT = stack_depth()  ;* 2
+*   x = stack_pop()         ;* x = 'world'
+*   x = stack_pop()         ;* x = 'hello'
+*   stack_pop()             ;* FRETURN -- empty
+*-----------------------------------------------------------------------------------
+
+               DATA('slink(snext,sval)')
+
+               DEFINE('stack_init()')                              :(stack_init_end)
+stack_init     stk            =                                    :(RETURN)
+stack_init_end
+
+               DEFINE('stack_push(x)')                            :(stack_push_end)
+stack_push     stk            =   slink(stk, x)
+               stack_push     =   .sval(stk)                      :(NRETURN)
+stack_push_end
+
+               DEFINE('stack_pop(var)')                           :(stack_pop_end)
+stack_pop      DIFFER(stk)                                        :F(FRETURN)
+               IDENT(var)                                         :F(stack_pop1)
+               stack_pop      =   sval(stk)
+               stk            =   snext(stk)                      :(RETURN)
+stack_pop1     $var           =   sval(stk)
+               stk            =   snext(stk)
+               stack_pop      =   .dummy                          :(NRETURN)
+stack_pop_end
+
+               DEFINE('stack_peek()')                             :(stack_peek_end)
+stack_peek     DIFFER(stk)                                        :F(FRETURN)
+               stack_peek     =   sval(stk)                       :(RETURN)
+stack_peek_end
+
+               DEFINE('stack_top()')                              :(stack_top_end)
+stack_top      DIFFER(stk)                                        :F(FRETURN)
+               stack_top      =   .sval(stk)                      :(NRETURN)
+stack_top_end
+
+               DEFINE('stack_depth()sd')                          :(stack_depth_end)
+stack_depth    stack_depth    =   0
+               sd             =   stk
+stk_dep0       DIFFER(sd)                                         :F(RETURN)
+               stack_depth    =   stack_depth + 1
+               sd             =   snext(sd)                       :(stk_dep0)
+stack_depth_end
