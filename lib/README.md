@@ -13,7 +13,7 @@ Griswold never standardized. Files are designed for `-include` use, like
 -include 'library/string.sno'
 ```
 
-Run from the SNOBOL4-corpus root so paths resolve correctly.
+Run from the snobol4corpus root so paths resolve correctly.
 
 ## Files
 

@@ -1,12 +1,12 @@
-# SNOBOL4-corpus / benchmarks
+# snobol4corpus / benchmarks
 
-Canonical benchmark programs for all SNOBOL4-plus implementations.
+Canonical benchmark programs for all snobol4ever implementations.
 
 Each `.sno` file is a self-contained SNOBOL4 program that writes its result
 to OUTPUT. The `.spt` files are SPITBOL-dialect programs (use `-TITLE` and
 `./*` preprocessor directives) from the original SPITBOL test suite.
 
-Each implementation repo (`SNOBOL4-jvm`, `SNOBOL4-dotnet`) points to this
+Each implementation repo (`snobol4jvm`, `snobol4dotnet`) points to this
 corpus as a Git submodule and provides its own benchmark runner that loads
 programs from this folder.
 

@@ -51,14 +51,14 @@ redistribution restriction stated by Budne; included here with attribution.
 distribution. Redistribution prohibited by Emmer's licence conditions.
 Not present in this repository. Obtain from the URL above.
 
-## SNOBOL4-plus Snocone front-end
+## snobol4ever Snocone front-end
 
-The SNOBOL4-plus project implements a Snocone front-end that translates `.sc`
+The snobol4ever project implements a Snocone front-end that translates `.sc`
 source to SNOBOL4 IR natively, without using Emmer's compiler as intermediary.
 This is original work derived from the Koenig specification (`report.md`) and
 the operator/precedence tables documented therein.
 
 | Repo | File | Status |
 |------|------|--------|
-| SNOBOL4-jvm | `src/SNOBOL4clojure/snocone.clj` | Step 1 (lexer) ✓ |
-| SNOBOL4-dotnet | `Snobol4.Common/Builder/SnoconeLexer.cs` | Step 1 (lexer) ✓ |
+| snobol4jvm | `src/SNOBOL4clojure/snocone.clj` | Step 1 (lexer) ✓ |
+| snobol4dotnet | `Snobol4.Common/Builder/SnoconeLexer.cs` | Step 1 (lexer) ✓ |

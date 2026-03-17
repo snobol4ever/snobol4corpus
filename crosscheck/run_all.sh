@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# run_all.sh — SNOBOL4-tiny crosscheck harness
+# run_all.sh — snobol4x crosscheck harness
 #
 # Runs every .sno file through sno2c, compiles the C, runs the binary,
 # diffs output against the .ref oracle. Pass = green, fail = red.
@@ -8,7 +8,7 @@
 #   bash run_all.sh [--sno2c path/to/sno2c] [--filter pattern]
 #
 # Dependencies:
-#   sno2c     — SNOBOL4-tiny compiler (default: ../SNOBOL4-tiny/src/sno2c/sno2c)
+#   sno2c     — snobol4x compiler (default: ../snobol4x/src/sno2c/sno2c)
 #   gcc       — C compiler with -lgc available
 #   libgc-dev — Boehm GC
 
@@ -18,8 +18,8 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Defaults
-SNO2C="${SNO2C:-$REPO_ROOT/../SNOBOL4-tiny/src/sno2c/sno2c}"
-RUNTIME="$REPO_ROOT/../SNOBOL4-tiny/src/runtime"
+SNO2C="${SNO2C:-$REPO_ROOT/../snobol4x/src/sno2c/sno2c}"
+RUNTIME="$REPO_ROOT/../snobol4x/src/runtime"
 FILTER="${1:-}"
 TMPDIR_RUN=$(mktemp -d)
 trap "rm -rf $TMPDIR_RUN" EXIT
@@ -31,7 +31,7 @@ GREEN='\033[0;32m'; RED='\033[0;31m'; YELLOW='\033[0;33m'; RESET='\033[0m'
 
 if [[ ! -x "$SNO2C" ]]; then
     echo "ERROR: sno2c not found at $SNO2C"
-    echo "Build with: make -C ../SNOBOL4-tiny/src/sno2c"
+    echo "Build with: make -C ../snobol4x/src/sno2c"
     exit 1
 fi
 
@@ -80,7 +80,7 @@ run_test() {
     fi
 }
 
-echo "=== SNOBOL4-tiny crosscheck ==="
+echo "=== snobol4x crosscheck ==="
 echo "sno2c: $SNO2C"
 echo ""
 

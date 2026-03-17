@@ -1,10 +1,10 @@
-# SNOBOL4-corpus Layout
+# snobol4corpus Layout
 
 All SNOBOL4 source programs live here. One canonical home per file.
 Engine repos do not keep their own copies.
 
 ```
-SNOBOL4-corpus/
+snobol4corpus/
 │
 ├── crosscheck/          ← PRIMARY harness feed — self-contained, deterministic, fast
 │   ├── hello/           ← smoke tests: hello world, empty string, multi-line output
@@ -24,7 +24,7 @@ SNOBOL4-corpus/
 │   ├── lon/             ← Lon's collection
 │   │   ├── sno/         ← general programs
 │   │   └── rinky/       ← rinky/social media programs
-│   ├── dotnet/          ← programs sourced from SNOBOL4-dotnet tests
+│   ├── dotnet/          ← programs sourced from snobol4dotnet tests
 │   ├── gimpel/          ← Gimpel book examples (to populate)
 │   └── icon/            ← ICON language translation demos
 │

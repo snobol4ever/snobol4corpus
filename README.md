@@ -1,9 +1,9 @@
-# SNOBOL4-corpus
+# snobol4corpus
 
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
 
 Shared SNOBOL4 programs, libraries, and benchmarks for the
-[SNOBOL4-plus](https://github.com/SNOBOL4-plus) organization.
+[snobol4ever](https://github.com/snobol4ever) organization.
 
 ---
 
@@ -39,14 +39,14 @@ CSNOBOL4 resolves `-include` files via (in order):
 To use the `lib/` standard library without a path prefix:
 
 ```bash
-export SNOPATH=/path/to/SNOBOL4-corpus/lib
+export SNOPATH=/path/to/snobol4corpus/lib
 snobol4 -f myprogram.sno
 ```
 
 Or invoke directly:
 
 ```bash
-snobol4 -I /path/to/SNOBOL4-corpus/lib -f myprogram.sno
+snobol4 -I /path/to/snobol4corpus/lib -f myprogram.sno
 ```
 
 ---
@@ -54,7 +54,7 @@ snobol4 -I /path/to/SNOBOL4-corpus/lib -f myprogram.sno
 ## Layout
 
 ```
-SNOBOL4-corpus/
+snobol4corpus/
 │
 ├── lib/                 ← Standard library (.inc files, -include by name)
 │   ├── stack.inc        ← stack_push/pop/peek/top/depth
@@ -85,7 +85,7 @@ SNOBOL4-corpus/
 │   │   └── rinky/       ← rinky/social media programs
 │   ├── gimpel/          ← Gimpel book programs (.SNO) and functions (.INC)
 │   ├── aisnobol/        ← AI in SNOBOL4 (Shafto)
-│   ├── dotnet/          ← programs from SNOBOL4-dotnet tests
+│   ├── dotnet/          ← programs from snobol4dotnet tests
 │   └── icon/            ← Icon language translation demos
 │
 ├── generated/           ← Pinned worm outputs that passed crosscheck
@@ -127,8 +127,8 @@ They are regression guards — do not edit by hand.
 ## As a Submodule
 
 ```bash
-# In SNOBOL4-jvm  (path: corpus/lon)
-# In SNOBOL4-dotnet  (path: corpus)
+# In snobol4jvm  (path: corpus/lon)
+# In snobol4dotnet  (path: corpus)
 git submodule update --init --recursive
 ```
 

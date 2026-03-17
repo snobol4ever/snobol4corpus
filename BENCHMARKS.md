@@ -1,12 +1,12 @@
-# SNOBOL4-plus Cross-Engine Benchmark Results
+# snobol4ever Cross-Engine Benchmark Results
 
 **Date**: 2026-03-10  
 **Host**: Linux x86-64, Java 21.0.10, .NET 10.0.103  
 **Engines**:
 - SPITBOL v4.0f — compiled native x64 (`spitbol -b -`)
 - CSNOBOL4 2.3.3 — compiled C (`snobol4 -`)
-- SNOBOL4-dotnet 0.1 — C#/.NET 10 threaded executor
-- SNOBOL4-jvm 0.2.0 — Clojure/JVM uberjar
+- snobol4dotnet 0.1 — C#/.NET 10 threaded executor
+- snobol4jvm 0.2.0 — Clojure/JVM uberjar
 
 **Methodology**: Each engine runs each benchmark at a count suited to its
 own speed, timed by `TIME()` calls inside the program (startup excluded).
@@ -16,8 +16,8 @@ All engines run on the same machine so machine power cancels out.
 **Startup overhead** (excluded from all timings):
 - SPITBOL: ~5ms
 - CSNOBOL4: ~10ms
-- SNOBOL4-dotnet: ~1-2s (.NET JIT)
-- SNOBOL4-jvm: ~8-10s (JVM + dynamic classload)
+- snobol4dotnet: ~1-2s (.NET JIT)
+- snobol4jvm: ~8-10s (JVM + dynamic classload)
 
 ---
 
