@@ -1,76 +1,249 @@
 *------------------------------------------------------------------------------
-* treebank.sno  --  Penn Treebank S-expression parser
+* treebank.sno — Penn Treebank S-expression parser
 * ENG 685, Lon Cherryholmes Sr.
 *
-* Translates treebank/group pattern from assignment3.py.
-* Uses lib/stack.sno (same library as beauty.sno / expression.sno).
+* Python original (assignment3.py):
 *
-* Pattern: group = '(' TAG items* ')'
-*   items = group | word
-* Each open node is pushed; on close, depth decreases and we output.
+*   group = ( σ('(')
+*           + word % "tag"
+*           + push_list("tag")
+*           + ARBNO(
+*               delim
+*             + ( ζ(lambda: group)
+*               | word % "wrd" + push_item("wrd")
+*               )
+*             )
+*           + pop_list()
+*           + σ(')')
+*           )
 *
-* Input:  VBGinTASA.dat  (Penn Treebank S-expressions, one tree per line)
-* Output: indented bracketed tree, 2 spaces per depth level
+*   treebank = ( POS(0)
+*              + init_list("bank")
+*              + push_list("'BANK'")
+*              + ARBNO(
+*                  push_list("'ROOT'")
+*                + ARBNO(group)
+*                + pop_list()
+*                + delim
+*                )
+*              + pop_final("bank")
+*              + RPOS(0)
+*              )
+*
+*   where:
+*     delim     = SPAN(" \n")
+*     word      = NOTANY("( )\n") BREAK("( )\n")
+*     push_list(v)  → push a new list headed by v onto the outer stack
+*     push_item(v)  → append v to the top list
+*     pop_list()    → close the top list; append it as a child to the list below
+*     pop_final(v)  → close the top list; assign it to variable v
+*
+* The Python uses a Python list-of-lists stack (stack = []).
+* Here we use the SNOBOL4 stack.sno linked-list stack exactly as beauty.sno does.
+* Each "list" on the stack is a DATA node: node(tag, children, next_sibling)
+* assembled as it is matched and finalised on pop_list / pop_final.
+*
+* Output: one indented line per node, 2 spaces per depth level.
 *------------------------------------------------------------------------------
--include 'lib/stack.sno'
 
-               &TRIM   = 0
-               NL      = CHAR(10)
-               SPC     = ' '
-               SPCNL   = SPC NL
+               &TRIM      = 1
+               &ANCHOR    = 0
+               &FULLSCAN  = 1
+               NL         = CHAR(10)
+               SPC        = ' '
+               SPCNL      = SPC NL
 
-*--- gm() -- recursive descent parser, consumes global gbuf ------------------
-*
-*   Called with gbuf pointing at '(' of a node.
-*   Reads:  ( TAG item* )
-*   Pushes open-bracket depth marker on stack, prints tree lines, pops on close.
-*   Uses FRETURN if gbuf doesn't start with '('.
-*
-               DEFINE('gm()ptag,pwrd')                            :(gm_e)
+*--- Stack (from stack.sno) ---------------------------------------------------
 
-gm
-               gbuf SPAN(SPCNL) =
-               gbuf POS(0) '(' =                                  :F(FRETURN)
-               gbuf SPAN(SPCNL) =
-               gbuf POS(0) BREAK(SPCNL '()') . ptag =            :F(FRETURN)
-               GT(SIZE(ptag), 0)                                  :F(FRETURN)
-               stack_push(depth)
-               OUTPUT         =   DUPL('  ', depth) '(' ' ' ptag
-               depth          =   depth + 1
-gm_loop
-               gbuf SPAN(SPCNL) =
-               gbuf POS(0) ')'                                    :S(gm_close)
-               gbuf POS(0) '('                                    :S(gm_child)
-               gbuf NOTANY(SPCNL '()') BREAK(SPCNL '()') . pwrd = :F(gm_close)
-               GT(SIZE(pwrd), 0)                                  :F(gm_close)
-               OUTPUT         =   DUPL('  ', depth) pwrd          :(gm_loop)
-gm_child
-               gm()                                               :F(FRETURN)
-                                                                  :(gm_loop)
-gm_close
-               gbuf SPAN(SPCNL) =
-               gbuf ')' =                                         :F(FRETURN)
-               depth          =   stack_pop()
-               OUTPUT         =   DUPL('  ', depth) ')'           :(RETURN)
-gm_e
+               DEFINE('InitStack()')
+               DEFINE('Push(x)')
+               DEFINE('Pop(var)')
+               DEFINE('Top()')
+               DATA('link(next,value)')                                        :(StackEnd)
+InitStack      $'@S'          =                                                :(RETURN)
+Push           $'@S'          =    link($'@S', x)
+               Push           =    IDENT(x)  .value($'@S')                     :S(NRETURN)
+               Push           =    DIFFER(x) .dummy                            :(NRETURN)
+Pop            DIFFER($'@S')                                                   :F(FRETURN)
+               IDENT(var)                                                      :F(Pop1)
+               Pop            =    value($'@S')
+               $'@S'          =    next($'@S')                                 :(RETURN)
+Pop1           Pop            =    .dummy
+               $var           =    value($'@S')
+               $'@S'          =    next($'@S')                                 :(NRETURN)
+Top            DIFFER($'@S')                                                   :F(FRETURN)
+               Top            =    .value($'@S')                               :(NRETURN)
+StackEnd
 
-*--- Main --------------------------------------------------------------------
+*--- Counter (from counter.sno) -----------------------------------------------
 
-               stack_init()
-               depth   = 0
-               gbuf    = ''
-rdloop         line    = INPUT                                     :F(parse)
-               gbuf    = gbuf SPC line                            :(rdloop)
+               DEFINE('InitCounter()')
+               DEFINE('PushCounter()')
+               DEFINE('IncCounter()')
+               DEFINE('TopCounter()')
+               DEFINE('PopCounter()')
+               DATA('link_counter(next,value)')                                :(CounterEnd)
+InitCounter    $'#N'          =                                                :(RETURN)
+PushCounter    $'#N'          =    link_counter($'#N', 0)
+               PushCounter    =    .dummy                                      :(NRETURN)
+IncCounter     value($'#N')   =    value($'#N') + 1
+               IncCounter     =    .dummy                                      :(NRETURN)
+TopCounter     TopCounter     =    DIFFER($'#N') value($'#N')                  :F(FRETURN)
+               OUTPUT         =    GT(xTrace, 4) TopCounter ' = TopCounter()'  :(RETURN)
+PopCounter     $'#N'          =    DIFFER($'#N') next($'#N')                   :F(FRETURN)
+               PopCounter     =    .dummy                                      :(NRETURN)
+CounterEnd
 
-parse          gbuf SPAN(SPCNL) =
-               gbuf POS(0) RPOS(0)                                :S(END)
-               gbuf POS(0) '('                                    :F(parse_err)
-               OUTPUT         =   '( ROOT'
-               depth          =   1
-               gm()                                               :F(parse_err)
-               depth          =   0
-               OUTPUT         =   ')'                             :(parse)
+*--- Node type ----------------------------------------------------------------
+*   node(tag, n, children) — tag is the POS label or word, n is child count,
+*   children is an ARRAY of the child nodes.
+
+               DATA('node(tag,n,children)')
+
+*--- λ side-effects as zero-length pattern functions --------------------------
+*   All return via NRETURN — zero cursor advance, like Python λ.
+
+*   init_list("bank") → initialise the outer stack, set bank = NULL
+
+               DEFINE('do_init_list()')                                        :(do_init_list_end)
+do_init_list   dummy          = InitStack()
+               dummy          = InitCounter()
+               bank           =
+               do_init_list   = .dummy                                         :(NRETURN)
+do_init_list_end
+
+*   push_list(v) → push a sentinel marker + push a new counter level
+
+               DEFINE('do_push_list(v)')                                       :(do_push_list_end)
+do_push_list   dummy          = Push(v)
+               dummy          = PushCounter()
+               do_push_list   = .dummy                                         :(NRETURN)
+do_push_list_end
+
+*   push_item(v) → increment counter, push item
+
+               DEFINE('do_push_item(v)')                                       :(do_push_item_end)
+do_push_item   dummy          = IncCounter()
+               dummy          = Push(v)
+               do_push_item   = .dummy                                         :(NRETURN)
+do_push_item_end
+
+*   pop_list() → close the current list: pop n items + sentinel, make a node,
+*   push it as a child of the parent list
+
+               DEFINE('do_pop_list()n,i,c,t,nd')                              :(do_pop_list_end)
+do_pop_list    n              = TopCounter()                                   :F(FRETURN)
+               dummy          = PopCounter()
+               IDENT(n, 0)                                                     :F(do_pop_list_arr)
+               c              =
+               t              = Pop()
+               nd             = node(t, n, c)
+               dummy          = IncCounter()
+               dummy          = Push(nd)
+               do_pop_list    = .dummy                                         :(NRETURN)
+do_pop_list_arr
+               c              = ARRAY('1:' n)
+               i              = n + 1
+do_pop_list_lp i              = GT(i, 1) i - 1                                :F(do_pop_list_bld)
+               c[i]           = Pop()                                          :(do_pop_list_lp)
+do_pop_list_bld
+               t              = Pop()
+               nd             = node(t, n, c)
+               dummy          = IncCounter()
+               dummy          = Push(nd)
+               do_pop_list    = .dummy                                         :(NRETURN)
+do_pop_list_end
+
+*   pop_final(v) → like pop_list but assigns result to variable v, no re-push
+
+               DEFINE('do_pop_final(v)n,i,c,t,nd')                            :(do_pop_final_end)
+do_pop_final   n              = TopCounter()                                   :F(FRETURN)
+               dummy          = PopCounter()
+               IDENT(n, 0)                                                     :F(do_pop_final_arr)
+               c              =
+               t              = Pop()
+               nd             = node(t, n, c)
+               $v             = nd
+               do_pop_final   = .dummy                                         :(NRETURN)
+do_pop_final_arr
+               c              = ARRAY('1:' n)
+               i              = n + 1
+do_pop_final_lp
+               i              = GT(i, 1) i - 1                                :F(do_pop_final_bld)
+               c[i]           = Pop()                                          :(do_pop_final_lp)
+do_pop_final_bld
+               t              = Pop()
+               nd             = node(t, n, c)
+               $v             = nd
+               do_pop_final   = .dummy                                         :(NRETURN)
+do_pop_final_end
+
+*--- Print helper -------------------------------------------------------------
+
+               DEFINE('print_node(nd,depth)i,ch')                             :(print_node_end)
+print_node     IDENT(DATATYPE(nd), 'STRING')                                   :S(print_leaf)
+               OUTPUT         = DUPL('  ', depth) '(' tag(nd)
+               i              = 1
+print_node_lp  i              = LE(i, n(nd)) i                                :F(print_node_cl)
+               ch             = children(nd)[i]
+               dummy          = print_node(ch, depth + 1)
+               i              = i + 1                                          :(print_node_lp)
+print_node_cl  OUTPUT         = DUPL('  ', depth) ')'                         :(RETURN)
+print_leaf     OUTPUT         = DUPL('  ', depth) nd                          :(RETURN)
+print_node_end
+
+*--- THE PATTERNS — mirror Python assignment3.py 99% -------------------------
+
+               delim       =  SPAN(SPCNL)
+
+               word        =  NOTANY('( )' NL)
++                              BREAK('( )' NL)
+
+*   group is self-referencing via *group (SNOBOL4 indirect pattern reference,
+*   mirrors Python ζ(lambda: group))
+
+               group       =  '('
++                              word . tag
++                              *do_push_list(tag)
++                              ARBNO(
++                                   delim
++                                   (  *group
++                                   |  word . wrd
++                                      *do_push_item(wrd)
++                                   )
++                              )
++                              *do_pop_list()
++                              ')'
+
+               treebank    =  POS(0)
++                              *do_init_list()
++                              *do_push_list('BANK')
++                              ARBNO(
++                                   *do_push_list('ROOT')
++                                   ARBNO(*group)
++                                   *do_pop_list()
++                                   delim
++                              )
++                              *do_pop_final('bank')
++                              RPOS(0)
+
+*--- Main ---------------------------------------------------------------------
+
+               buf            = ''
+
+rdloop         line           = INPUT                                          :F(parse)
+               buf            = buf SPC line                                   :(rdloop)
+
+parse          buf            treebank                                         :F(parse_err)
+
+*   Print the result tree
+
+               IDENT(DATATYPE(bank), 'node')                                   :F(END)
+               i              = 1
+print_lp       i              = LE(i, n(bank)) i                               :F(END)
+               dummy          = print_node(children(bank)[i], 0)
+               i              = i + 1                                          :(print_lp)
 
 parse_err
-               OUTPUT  = '*** parse error: [' SUBSTR(gbuf,1,40) ']'
+               OUTPUT         = '*** treebank match failed'
 END
