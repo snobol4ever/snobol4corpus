@@ -1,56 +1,100 @@
-*----------------------------------------------------------------------------------
-* claws5.sno - CLAWS5 POS-tagged corpus tokenizer
-* Author: translated from Lon Cherryholmes' SNOBOL4python pattern (assignment3.py)
+*------------------------------------------------------------------------------
+* claws5.sno — CLAWS5 POS-tagged corpus tokenizer
+* ENG 685, Lon Cherryholmes Sr.
 *
-* Input:  CLAWS5-tagged corpus, one or more lines. Format:
-*           N_CRD :_PUN word1_TAG1 word2_TAG2 ... ._PUN 
-*         N_CRD :_PUN marks sentence number N (suppressed in output).
-*         Each token is  word_TAG  followed by a space.
-*         TAG = uppercase letters + digits (AT0, VVG, NN1, AJ0, PUN, etc.)
-*         Punctuation tokens: ,_PUN  ._PUN  etc.
+* Translation of the claws_info pattern from assignment3.py.
+* One scan loop, three arms: whitespace, sentence marker, tagged token.
+* Helper functions mirror Python lambdas (count_tag, mem init/update).
 *
-* Output: one line per token:   sentno TAB word TAB tag
+* Input:  CLAWS5inTASA.dat  (word_TAG tokens, N_CRD :_PUN sentence markers)
+* Output: sentno TAB word TAB tag  (one line per token)
+*------------------------------------------------------------------------------
+
+        &TRIM   = 0
+        &ANCHOR = 0
+        DIGITS  = '0123456789'
+        UCASE   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        NL      = CHAR(10)
+        TAB     = CHAR(9)
+
+*--- mem_init() — λ("mem = dict()")  λ("sentno = 0") --------------------------
+        DEFINE('mem_init()')                            :(mem_init_end)
+mem_init
+        mem     = TABLE()
+        sentno  = 0
+        mem_init =                                      :(RETURN)
+mem_init_end
+
+*--- new_sent() — reads global num; λ("num=int(num)") λ("mem[num]=dict()") ----
+        DEFINE('new_sent()')                            :(new_sent_end)
+newsent_lbl
+        sentno       = num + 0
+        mem[sentno]  = TABLE()
+        new_sent     =                                  :(RETURN)
+new_sent_end
+
+*--- add_token() — reads globals wrd,tag; updates mem; emits output line -------
+*    mirrors: λ("if wrd not in mem[num]: ...") + λ("mem[num][wrd][tag] += 1")
+        DEFINE('add_token()sub')                        :(add_token_end)
+add_token
+        sub = mem[sentno]
+        IDENT(DATATYPE(sub), 'TABLE')                   :F(add_token_out)
+        DIFFER(sub[wrd])                                :F(add_token_newsub)
+        DIFFER(sub[wrd][tag])                           :F(add_token_newtag)
+        sub[wrd][tag] = sub[wrd][tag] + 1               :(add_token_out)
+add_token_newsub
+        sub[wrd]      = TABLE()
+add_token_newtag
+        sub[wrd][tag] = 1
+add_token_out
+        OUTPUT        = sentno TAB wrd TAB tag
+        add_token     =                                 :(RETURN)
+add_token_end
+
+*--- Patterns ----------------------------------------------------------------
 *
-* Reads all input into a buffer first (trees may span multiple lines),
-* then tokenizes left-to-right consuming the buffer.
+*   claws_info in Python:
+*     POS(0) + λ("mem=dict()") + ARBNO(
+*       ( SPAN(DIGITS) % "num" + σ('_CRD :_PUN ')  λ("mem[num]=dict()")
+*       | (NOTANY("_")+BREAK("_")) % "wrd" + σ('_')
+*         + (ANY(UCASE)+SPAN(DIGITS+UCASE)) % "tag" + σ(' ')
+*         + λ("mem[num][wrd][tag] += 1")
+*       )
+*     ) + RPOS(0)
 *
-* Corresponds to Python pattern: claws_info (assignment3.py).
-*----------------------------------------------------------------------------------
+*   SNOBOL4 scan loop: consume buf one token at a time, left to right.
+*   Each arm uses POS(0) to anchor at start of remaining buf.
+*   wsarm  — strip leading whitespace (newlines between lines)
+*   sentarm — sentence marker: "1_CRD :_PUN "
+*   tokarm  — tagged token:    "word_TAG "
 
-        &TRIM    = 0
-        digits   = '0123456789'
-        nl       = CHAR(10)
-        TAB      = CHAR(9)
-        sentno   = 0
-        buf      = ''
+        sentarm  = POS(0) SPAN(DIGITS) . num '_CRD :_PUN '
+        tokarm   = POS(0) BREAKX('_ ') . wrd '_' BREAK(' ' NL) . tag
++                  ANY(' ' NL)
+        wsarm    = POS(0) SPAN(' ' NL)
 
-*----- read all input -------------------------------------------------------------
+*--- Read all input into buf --------------------------------------------------
 
-rdloop  line     = INPUT                                :F(tokenize)
-        buf      = buf line nl                          :(rdloop)
+        dummy   = mem_init()
+        buf     = ''
+rdloop  line    = INPUT                                 :F(scan)
+        buf     = buf line ' '                          :(rdloop)
 
-*----- tokenize -------------------------------------------------------------------
+*--- Main scan loop -----------------------------------------------------------
 *
-*       sentpat  anchored sentence marker at start of buf
-*       wrdpat   skip leading whitespace, capture word and tag
+*   claws_info = POS(0) *mem_init() ARBNO( (ws|'') token ) RPOS(0)
 *
-*       Key: sentpat must be POS(0)-anchored so it cannot match mid-buffer
-*            (BREAKX would otherwise find digits inside words like NN2).
+*   Realised as consume loop: each arm matches and deletes from buf front.
 
-tokenize
-        sentpat  = POS(0) SPAN(digits) . num '_CRD :_PUN '
-        wrdpat   = (SPAN(' ' nl) | '') BREAKX('_ ' nl) . wrd
-+                  '_' BREAK(' ' nl) . tag (ANY(' ' nl) | RPOS(0))
+scan    buf wsarm =                                     :S(scan)
+        buf sentarm =                                   :S(newsent_lbl)
+        buf tokarm  =                                   :S(token_lbl)
+        buf POS(0) RPOS(0)                              :S(END)
+        OUTPUT  = '*** unmatched: [' SUBSTR(buf,1,40) ']'  :(END)
 
-tokloop buf      (SPAN(' ' nl) | '') =
-        buf      POS(0) RPOS(0)                         :S(END)
-        buf      sentpat =                              :S(new_sent)
-        buf      wrdpat =                               :S(token)
-        OUTPUT   = '*** unmatched: [' buf ']'           :(END)
+newsent_lbl
+        dummy   = new_sent()                            :(scan)
 
-new_sent
-        sentno   = num + 0                              :(tokloop)
-
-token
-        OUTPUT   = sentno TAB wrd TAB tag               :(tokloop)
+token_lbl
+        dummy   = add_token()                           :(scan)
 END

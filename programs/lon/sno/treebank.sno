@@ -1,65 +1,76 @@
-*----------------------------------------------------------------------------------
-* treebank.sno - Penn Treebank S-expression parser
-* Author: translated from Lon Cherryholmes' SNOBOL4python pattern (assignment3.py)
+*------------------------------------------------------------------------------
+* treebank.sno  --  Penn Treebank S-expression parser
+* ENG 685, Lon Cherryholmes Sr.
 *
-* Input:  Penn Treebank S-expressions, one per paragraph (blank-line delimited).
-*         Trees may span multiple lines. Example:
-*           (S (NP (DT The) (NN cat))
-*              (VP (VBZ sat)))
+* Translates treebank/group pattern from assignment3.py.
+* Uses lib/stack.sno (same library as beauty.sno / expression.sno).
 *
-* Output: indented pretty-print, 2 spaces per depth level.
+* Pattern: group = '(' TAG items* ')'
+*   items = group | word
+* Each open node is pushed; on close, depth decreases and we output.
 *
-* Tags:    uppercase letters, digits, hyphen, $, comma, dot
-* Words:   any non-paren non-space token
+* Input:  VBGinTASA.dat  (Penn Treebank S-expressions, one tree per line)
+* Output: indented bracketed tree, 2 spaces per depth level
+*------------------------------------------------------------------------------
+-include 'lib/stack.sno'
+
+               &TRIM   = 0
+               NL      = CHAR(10)
+               SPC     = ' '
+               SPCNL   = SPC NL
+
+*--- gm() -- recursive descent parser, consumes global gbuf ------------------
 *
-* Corresponds to Python patterns: group / treebank (assignment3.py).
-*----------------------------------------------------------------------------------
+*   Called with gbuf pointing at '(' of a node.
+*   Reads:  ( TAG item* )
+*   Pushes open-bracket depth marker on stack, prints tree lines, pops on close.
+*   Uses FRETURN if gbuf doesn't start with '('.
+*
+               DEFINE('gm()ptag,pwrd')                            :(gm_e)
 
-        &TRIM    = 1
-        tagch    = &UCASE '0123456789-$,.'
-        wordend  = '() '
-        optsp    = (SPAN(' ') | '')
+gm
+               gbuf SPAN(SPCNL) =
+               gbuf POS(0) '(' =                                  :F(FRETURN)
+               gbuf SPAN(SPCNL) =
+               gbuf POS(0) BREAK(SPCNL '()') . ptag =            :F(FRETURN)
+               GT(SIZE(ptag), 0)                                  :F(FRETURN)
+               stack_push(depth)
+               OUTPUT         =   DUPL('  ', depth) '(' ' ' ptag
+               depth          =   depth + 1
+gm_loop
+               gbuf SPAN(SPCNL) =
+               gbuf POS(0) ')'                                    :S(gm_close)
+               gbuf POS(0) '('                                    :S(gm_child)
+               gbuf NOTANY(SPCNL '()') BREAK(SPCNL '()') . pwrd = :F(gm_close)
+               GT(SIZE(pwrd), 0)                                  :F(gm_close)
+               OUTPUT         =   DUPL('  ', depth) pwrd          :(gm_loop)
+gm_child
+               gm()                                               :F(FRETURN)
+                                                                  :(gm_loop)
+gm_close
+               gbuf SPAN(SPCNL) =
+               gbuf ')' =                                         :F(FRETURN)
+               depth          =   stack_pop()
+               OUTPUT         =   DUPL('  ', depth) ')'           :(RETURN)
+gm_e
 
-*----- parse_node(depth) ----------------------------------------------------------
+*--- Main --------------------------------------------------------------------
 
-        DEFINE('parse_node(depth)tag,wrd')              :(parse_node_end)
+               stack_init()
+               depth   = 0
+               gbuf    = ''
+rdloop         line    = INPUT                                     :F(parse)
+               gbuf    = gbuf SPC line                            :(rdloop)
 
-parse_node
-        subject  optsp =
-        subject  POS(0) '(' =                           :F(FRETURN)
-        subject  SPAN(tagch) . tag =                    :F(FRETURN)
-        OUTPUT   =  DUPL('  ', depth) '(' tag
+parse          gbuf SPAN(SPCNL) =
+               gbuf POS(0) RPOS(0)                                :S(END)
+               gbuf POS(0) '('                                    :F(parse_err)
+               OUTPUT         =   '( ROOT'
+               depth          =   1
+               gm()                                               :F(parse_err)
+               depth          =   0
+               OUTPUT         =   ')'                             :(parse)
 
-pn_loop subject  optsp =
-        subject  POS(0) ')' =                           :S(pn_close)
-        subject  POS(0) '('                             :S(pn_child)
-        subject  BREAK(wordend) . wrd =                 :F(pn_close)
-        OUTPUT   =  DUPL('  ', depth + 1) wrd           :(pn_loop)
-
-pn_child
-        parse_node(depth + 1)                           :(pn_loop)
-
-pn_close
-        OUTPUT   =  DUPL('  ', depth) ')'               :(RETURN)
-
-parse_node_end
-
-*----- main -----------------------------------------------------------------------
-*       Accumulate non-blank lines into subject; parse on blank line or EOF.
-*----------------------------------------------------------------------------------
-
-        subject  = ''
-
-rdloop  line     = INPUT                                :F(eof)
-        line POS(0) RPOS(0)                             :S(parse)
-        subject  = subject ' ' line                     :(rdloop)
-
-parse   subject (SPAN(' ') | '') POS(0) RPOS(0)        :S(next)
-        parse_node(0)                                   :S(next)
-        OUTPUT   = '*** parse error at: [' subject ']'
-next    subject  = ''                                   :(rdloop)
-
-eof     subject (SPAN(' ') | '') POS(0) RPOS(0)        :S(END)
-        parse_node(0)                                   :S(END)
-        OUTPUT   = '*** parse error at: [' subject ']'
+parse_err
+               OUTPUT  = '*** parse error: [' SUBSTR(gbuf,1,40) ']'
 END
