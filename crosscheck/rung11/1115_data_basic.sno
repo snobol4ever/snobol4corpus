@@ -1,12 +1,15 @@
 * 1115_data_basic.sno — DATA: constructor, DATATYPE, field accessors, mutator, VALUE()
 * Rung 11. 6 assertions.
+* DATATYPE() result normalized to uppercase for oracle-stability across engines
+* (CSNOBOL4 returns uppercase type names; SPITBOL/snobol4x return lowercase;
+*  SPITBOL -f/-F fold switches also affect case). User field values untouched.
 
         data('node(val,lson,rson)')
 
         a = node('x', 'y', 'z')
 
-        differ(datatype(a), 'node')                   :f(e001)
-        output = 'FAIL 1115/001: datatype of node'     :(end)
+        differ(replace(datatype(a),&lcase,&ucase), 'NODE')   :f(e001)
+        output = 'FAIL 1115/001: datatype of node'            :(end)
 e001
 
         differ(val(a), 'x')                   :f(e002)
